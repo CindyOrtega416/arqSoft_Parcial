@@ -1,7 +1,7 @@
 package ar.edu.ucc.arqSoft.common.dto;
 
 public class GenericExceptionDto {
-
+	
 	private String code;
 	
 	private String message;
@@ -31,4 +31,5 @@ public class GenericExceptionDto {
 	public GenericExceptionDto() {
 		super();
 	}
+
 }

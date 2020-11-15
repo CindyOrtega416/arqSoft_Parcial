@@ -13,6 +13,9 @@ import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
+import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
+
 @Repository
 public abstract class GenericDaoImp<E, ID extends Serializable> implements GenericDao<E, ID> {
 
@@ -28,8 +31,13 @@ public abstract class GenericDaoImp<E, ID extends Serializable> implements Gener
 		daoType = (Class<? extends E>) pt.getActualTypeArguments()[0];
 	}
 
-	public void insert(E entity) {
-		em.persist(entity);
+	public void insert(E entity) throws BadRequestException {
+		try {
+				em.persist(entity);
+		} catch (Exception e) {
+				throw new BadRequestException();
+		}
+	
 	}
 
 	public void saveOrUpdate(E entity) {
@@ -43,11 +51,17 @@ public abstract class GenericDaoImp<E, ID extends Serializable> implements Gener
 	public void remove(E entity) {
 		em.remove(entity);
 	}
-
-	public E load(ID key) {
-		return em.find(daoType, key);
+	
+	public E load(ID key) throws EntityNotFoundException{
+		E entity = em.find(daoType, key);
+		
+		if (entity == null) {
+			throw new EntityNotFoundException();
+		}
+		return entity;
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public List<E> getAll() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();

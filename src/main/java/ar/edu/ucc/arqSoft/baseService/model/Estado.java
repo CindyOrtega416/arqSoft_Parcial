@@ -1,7 +1,6 @@
 package ar.edu.ucc.arqSoft.baseService.model;
 
 
-
 import java.util.Set;
 
 import javax.persistence.Column;

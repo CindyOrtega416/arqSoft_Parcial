@@ -1,6 +1,5 @@
 package ar.edu.ucc.arqSoft.baseService.model;
 
-
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,8 +14,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ar.edu.ucc.arqSoft.common.model.GenericObject;
-
-
 
 @Entity
 @Table(name = "USUARIO")

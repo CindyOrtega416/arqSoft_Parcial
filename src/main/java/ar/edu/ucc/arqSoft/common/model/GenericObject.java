@@ -1,4 +1,5 @@
 package ar.edu.ucc.arqSoft.common.model;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,4 +21,5 @@ public abstract class GenericObject {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 }
