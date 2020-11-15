@@ -1,12 +1,12 @@
 package ar.edu.ucc.arqSoft.baseService.model;
 
 
-import java.util.Date;
+
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,17 +20,36 @@ public class Estado extends GenericObject{
 	private String nombre;
 	
 	@NotNull
-	@Size(min = 1, max = 250)
-	@Column(name = "FECHA_INICIO")
-	private Date fecha_inicio;
+	@Size(min = 1, max = 500)
+	@Column(name = "DESCRIPCION")
+	private String descripcion;
 	
-	@NotNull
-	@Size(min = 1, max = 250)
-	@Column(name = "ULTIMA_ACTUALIZACION")
-	private Date ultima_actualizacion;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_TAREA")
-	private Tarea tarea;
+	@OneToMany(mappedBy="estado", fetch = FetchType.LAZY)
+	private Set<Tarea> tareas;
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Set<Tarea> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(Set<Tarea> tareas) {
+		this.tareas = tareas;
+	}
+	
+	
 }
