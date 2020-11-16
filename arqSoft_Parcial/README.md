@@ -23,7 +23,11 @@ MODEL
 * Comentario
 * Estados de proyecto (no enum) (entidad mas)
 * Estados de tareas (no enum) (entidad mas) one to many contra el estado de la tarea
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 * Tenemos que poder dar de alta usuarios; alta de proyectos; 
 asignar usuarios a los proyectos (no entrar en temas de roles) (cualquier persona puede hacer cualquier cosa); 
 * poder decir en este proyecto trabajan estas 5, 6 personas; 
