@@ -17,12 +17,12 @@ La tarea va a tener una coleccion de anotaciones que pueden ir surgiendo. Franci
 No enum porque el core es la cantidad de estados que uno puede tener. Concentrarse mucho en entender los estados que puede tener, cuales son las transiciones posibles de estado de un lado a otro (la tarea puede estar ASIGNADA, CREADA, EN DESARROLLO, PAUSADA (a la espera de que se complete otra tarea)) y cada vez que yo tenga que cambiar de estado una tarea debería poder chequear de que al estado nuevo al que tenga que ir sea un estado de varios(? (si yo voy y digo la tarea está CREADA y yo digo bueno ahora la quiero CERRAR, no es factible que se pueda cerrar del estado creada
 
 MODEL
-*Usuario
-*Proyecto
-*Tarea (las tareas se asignan a usuarios)
-*Comentario
-*Estados de proyecto (no enum) (entidad mas)
-*Estados de tareas (no enum) (entidad mas) one to many contra el estado de la tarea
+* Usuario
+* Proyecto
+* Tarea (las tareas se asignan a usuarios)
+* Comentario
+* Estados de proyecto (no enum) (entidad mas)
+* Estados de tareas (no enum) (entidad mas) one to many contra el estado de la tarea
 
 * Tenemos que poder dar de alta usuarios; alta de proyectos; 
 asignar usuarios a los proyectos (no entrar en temas de roles) (cualquier persona puede hacer cualquier cosa); 
