@@ -15,6 +15,12 @@ public class Comentario extends GenericObject {
 	
 	@NotNull
 	@Size(min = 1, max = 500)
+	@Column(name = "NOMBRE")
+	private String nombre;
+	
+	
+	@NotNull
+	@Size(min = 1, max = 500)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 	
@@ -28,8 +34,19 @@ public class Comentario extends GenericObject {
 	
 	@NotNull
 	@Size(min = 1, max = 12)
-	@Column(name = "DATE")
-	private Date date;
+	@Column(name = "FECHA")
+	private Date fecha;
+	
+	
+
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
 	public String getDescripcion() {
 		return descripcion;
@@ -55,13 +72,14 @@ public class Comentario extends GenericObject {
 		this.tarea = tarea;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
+
 	
 	
 	
