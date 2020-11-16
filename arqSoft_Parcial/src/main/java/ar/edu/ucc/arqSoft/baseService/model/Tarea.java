@@ -49,10 +49,6 @@ public class Tarea extends GenericObject {
 	private Date ultima_actualizacion;
 	
 	
-	@Enumerated(value = EnumType.ORDINAL)
-	@Column(name = "PRIORIDAD")
-	private Prioridad prioridad;
-	
 	@OneToMany(mappedBy="tarea", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
@@ -110,14 +106,6 @@ public class Tarea extends GenericObject {
 
 	public void setUltima_actualizacion(Date ultima_actualizacion) {
 		this.ultima_actualizacion = ultima_actualizacion;
-	}
-
-	public Prioridad getPrioridad() {
-		return prioridad;
-	}
-
-	public void setPrioridad(Prioridad prioridad) {
-		this.prioridad = prioridad;
 	}
 
 	public Set<Comentario> getComentarios() {
