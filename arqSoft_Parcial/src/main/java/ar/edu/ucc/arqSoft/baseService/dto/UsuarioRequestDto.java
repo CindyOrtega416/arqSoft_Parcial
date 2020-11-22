@@ -6,6 +6,8 @@ import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class UsuarioRequestDto implements DtoEntity {
+	
+			private Long id;
 			
 			private String nombre;
 			
@@ -13,7 +15,14 @@ public class UsuarioRequestDto implements DtoEntity {
 			
 			private String email;
 		
-			private Set<Proyecto> proyectos;
+			
+			public Long getId() {
+				return id;
+			}
+
+			public void setId(Long id) {
+				this.id = id;
+			}
 
 			public String getNombre() {
 				return nombre;
@@ -39,15 +48,4 @@ public class UsuarioRequestDto implements DtoEntity {
 				this.email = email;
 			}
 
-			public Set<Proyecto> getProyectos() {
-				return proyectos;
-			}
-
-			public void setProyectos(Set<Proyecto> proyectos) {
-				this.proyectos = proyectos;
-			}
-			
-			
-			
-			
 }

@@ -13,7 +13,6 @@ public class UsuarioResponseDto implements DtoEntity{
 	
 	private String email;
 	
-	private Set<Proyecto> proyectos;
 
 	public String getNombre() {
 		return nombre;
@@ -39,15 +38,7 @@ public class UsuarioResponseDto implements DtoEntity{
 		this.email = email;
 	}
 
-	public Set<Proyecto> getProyectos() {
-		return proyectos;
-	}
 
-	public void setProyectos(Set<Proyecto> proyectos) {
-		this.proyectos = proyectos;
-	}
-	
-	
 	
 
 }

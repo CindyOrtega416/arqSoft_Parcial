@@ -2,6 +2,8 @@ package ar.edu.ucc.arqSoft.baseService.dto;
 
 import java.util.Date;
 
+import ar.edu.ucc.arqSoft.baseService.model.Tarea;
+import ar.edu.ucc.arqSoft.baseService.model.Usuario;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class ComentarioResponseDto implements DtoEntity {
@@ -9,8 +11,8 @@ public class ComentarioResponseDto implements DtoEntity {
 	
 	private String nombre;
 	private String descripcion;
-	private Long id_usuario;
-	private Long id_tarea;
+	private Usuario usuario;
+	private Tarea tarea;
 	private Date fecha;
 	
 	public String getNombre() {
@@ -25,17 +27,18 @@ public class ComentarioResponseDto implements DtoEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public Long getId_usuario() {
-		return id_usuario;
+	
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public void setId_usuario(Long id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-	public Long getId_tarea() {
-		return id_tarea;
+	public Tarea getTarea() {
+		return tarea;
 	}
-	public void setId_tarea(Long id_tarea) {
-		this.id_tarea = id_tarea;
+	public void setTarea(Tarea tarea) {
+		this.tarea = tarea;
 	}
 	public Date getFecha() {
 		return fecha;
