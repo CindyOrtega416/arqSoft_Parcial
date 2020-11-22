@@ -22,35 +22,35 @@ public class EstadoService {
 	@Autowired
 	private EstadoDao estadoDao;
 
-	public EstadoResponseDto getEstadoById(Long id) throws EntityNotFoundException {
-		Estado estado = estadoDao.load(id);
-				
-		EstadoResponseDto response = (EstadoResponseDto) new ModelDtoConverter().convertToDto(estado, new EstadoResponseDto());	
-		return response;
-	}
-	
-	public List<EstadoResponseDto> getAllEstados() {
-		List<Estado> estados = estadoDao.getAll();
+	public List<EstadoResponseDto> GetByNombre(String nombre) throws EntityNotFoundException, BadRequestException {
+		List<Estado> estados = estadoDao.FindByName(nombre);
 		
 		List<EstadoResponseDto> response = new ArrayList<EstadoResponseDto>();
-		 
-		for (Estado estado : estados) {
-			response.add((EstadoResponseDto) new ModelDtoConverter().convertToDto(estado, new EstadoResponseDto()));
+		for(Estado estado: estados) 
+		{
+			if(estado.getId()<=0)
+			{
+				throw new BadRequestException();
+			}
+		response.add((EstadoResponseDto) new ModelDtoConverter().convertToDto(estado,new EstadoResponseDto()));
 		}
-		
 		return response;
 	}
 	
-	
-	public EstadoResponseDto insertEstado(EstadoRequestDto request) throws BadRequestException {
+	public EstadoResponseDto insertEstado (EstadoRequestDto request) throws BadRequestException{
 		
-		Estado estado = (Estado) new ModelDtoConverter().convertToEntity(new Estado(), request);
+		Estado estado = new Estado();
+		
+		estado.setNombre(request.getNombre());
+		estado.setDescripcion(request.getDescripcion());
 		
 		estadoDao.insert(estado);
 		
-		EstadoResponseDto response = (EstadoResponseDto) new ModelDtoConverter().convertToDto(estado, new EstadoResponseDto());	
+		EstadoResponseDto response = new EstadoResponseDto();
 		
+		response.setNombre(estado.getNombre());
+		response.setDescripcion(estado.getDescripcion());		
 		return response;
+		
 	}
-	
 }

@@ -31,17 +31,19 @@ public class ComentarioService {
 	@Autowired
 	private ComentarioDao comentarioDao;
 	
-	public ComentarioResponseDto insertComentario (ComentarioRequestDto dto) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
-		if(tareaDao.load(dto.getId_tarea()).getEstado().getNombre()=="Cerrado")
+	public ComentarioResponseDto insertComentario (ComentarioRequestDto request) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
+		if(tareaDao.load(request.getId_tarea()).getEstado().getNombre()=="Cerrado")
 		{
 			throw new TareaCerradaException();		//no aceptar comentarios si tarea=cerrada
 		}
 		
 		Comentario comentario = new Comentario();
-		comentario.setNombre(dto.getNombre());
-		comentario.setDescripcion(dto.getDescripcion());
-		comentario.setUsuario(usuarioDao.load(dto.getId_usuario()));
-		comentario.setTarea(tareaDao.load(dto.getId_tarea()));
+		
+		
+		comentario.setNombre(request.getNombre());
+		comentario.setDescripcion(request.getDescripcion());
+		comentario.setUsuario(usuarioDao.load(request.getId_usuario()));
+		comentario.setTarea(tareaDao.load(request.getId_tarea()));
 		comentario.setFecha(Calendar.getInstance().getTime());
 		
 		comentarioDao.insert(comentario);
@@ -49,9 +51,10 @@ public class ComentarioService {
 		ComentarioResponseDto response=new ComentarioResponseDto();
 		
 		response.setNombre(comentario.getNombre());
-		response.setId_usuario(comentario.getUsuario().getId());
+		response.setUsuario(comentario.getUsuario());
 		response.setDescripcion(comentario.getDescripcion());
 		response.setFecha(comentario.getFecha());
+		response.setTarea(comentario.getTarea());
 		
 		return response;
 		
@@ -68,8 +71,8 @@ public class ComentarioService {
 		dto.setDescripcion(comentario.getDescripcion());
 		dto.setFecha(comentario.getFecha());
 		dto.setNombre(comentario.getNombre());
-		dto.setId_tarea(comentario.getTarea().getId());
-		dto.setId_usuario(comentario.getUsuario().getId());
+		dto.setTarea(comentario.getTarea());
+		dto.setUsuario(comentario.getUsuario());
 		
 	
 		return dto;
