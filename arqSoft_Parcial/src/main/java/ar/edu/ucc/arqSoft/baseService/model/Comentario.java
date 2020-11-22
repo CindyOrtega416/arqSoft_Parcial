@@ -18,28 +18,24 @@ public class Comentario extends GenericObject {
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	
 	@NotNull
 	@Size(min = 1, max = 500)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_USUARIO")
-	private Usuario usuario;
+	@JoinColumn(name="ID_COMENTARIO")
+	private Tarea tarea;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_TAREA")
-	private Tarea tarea;
+	@JoinColumn(name="ID_COMENTARIO")
+	private Usuario usuario;
 	
 	@NotNull
 	@Size(min = 1, max = 12)
 	@Column(name = "FECHA")
 	private Date fecha;
-	
-	
 
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -56,20 +52,20 @@ public class Comentario extends GenericObject {
 		this.descripcion = descripcion;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Tarea getTarea() {
 		return tarea;
 	}
 
 	public void setTarea(Tarea tarea) {
 		this.tarea = tarea;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Date getFecha() {
@@ -79,6 +75,8 @@ public class Comentario extends GenericObject {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	
+	
 
 	
 	

@@ -5,7 +5,11 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,11 +19,12 @@ import ar.edu.ucc.arqSoft.common.model.GenericObject;
 @Entity
 @Table(name = "PROYECTO")
 public class Proyecto extends GenericObject {
-
-	@ManyToMany(mappedBy = "proyectos")
+	
+	@ManyToMany(mappedBy = "usuarios")
 	private Set<Usuario> usuarios;
-
-	public Set<Usuario> getUsuarios() {return usuarios;};			//esto esta bien?
+	
+	@OneToMany (targetEntity=Usuario.class, mappedBy="TAREA", fetch = FetchType.LAZY)
+	private Set<Tarea>  tareas;
 	
 	@NotNull
 	@Size(min = 1, max = 250)
@@ -38,10 +43,26 @@ public class Proyecto extends GenericObject {
 	@NotNull
 	@Column(name = "FECHA_ACTUALIZACION")
 	private Date fecha_actualizacion;
+	
+	@Enumerated(value = EnumType.ORDINAL)
+	@Column(name = "ESTADO_PROYECTO")
+	private EstadoProyecto estado;
 
-	@NotNull
-	@Column(name = "ESTADO") 
-	private String estado;			//asi se puede relacionar con estado?
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public Set<Tarea> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(Set<Tarea> tareas) {
+		this.tareas = tareas;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -75,17 +96,14 @@ public class Proyecto extends GenericObject {
 		this.fecha_actualizacion = fecha_actualizacion;
 	}
 
-	public String getEstado() {
+	public EstadoProyecto getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(EstadoProyecto estado) {
 		this.estado = estado;
 	}
 
-	public void setUsuarios(Set<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
 
 
 	

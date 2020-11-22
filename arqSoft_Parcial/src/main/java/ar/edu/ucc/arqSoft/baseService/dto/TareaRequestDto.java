@@ -3,6 +3,8 @@ package ar.edu.ucc.arqSoft.baseService.dto;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class TareaRequestDto implements DtoEntity {
+	
+	private Long id;
 
 	private String nombre_tarea;
 	
@@ -13,6 +15,16 @@ public class TareaRequestDto implements DtoEntity {
 	private Long id_estado;
 	
 	private String descripcion;
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNombre_tarea() {
 		return nombre_tarea;

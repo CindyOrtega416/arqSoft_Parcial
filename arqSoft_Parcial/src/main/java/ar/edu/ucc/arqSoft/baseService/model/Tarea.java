@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -25,10 +26,9 @@ public class Tarea extends GenericObject {
 	@Size(min = 1, max = 250)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	
-	@ManyToOne(fetch = FetchType.LAZY)		//Una tarea en particular tiene solo un usuario asignado
-	@JoinColumn(name="ID_USUARIO")			//MUCHAS tareas pueden ser asignadas a UN usuario
-	private Usuario usuario;
+
+	@ManyToMany(mappedBy = "Usuarios")
+	private Set<Usuario> usuarios;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PROYECTO")
@@ -49,7 +49,7 @@ public class Tarea extends GenericObject {
 	private Date ultima_actualizacion;
 	
 	
-	@OneToMany(mappedBy="tarea", fetch = FetchType.LAZY)
+	@OneToMany (targetEntity=Usuario.class, mappedBy="usuario", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
 	public String getNombre_tarea() {
@@ -68,13 +68,6 @@ public class Tarea extends GenericObject {
 		this.descripcion = descripcion;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Proyecto getProyecto() {
 		return proyecto;
@@ -108,6 +101,14 @@ public class Tarea extends GenericObject {
 		this.ultima_actualizacion = ultima_actualizacion;
 	}
 
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
 	public Set<Comentario> getComentarios() {
 		return comentarios;
 	}
@@ -115,6 +116,7 @@ public class Tarea extends GenericObject {
 	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
+
 
 	
 	

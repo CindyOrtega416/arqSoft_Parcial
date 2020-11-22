@@ -2,6 +2,7 @@ package ar.edu.ucc.arqSoft.baseService.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,17 +35,36 @@ public class Usuario extends GenericObject{
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@OneToMany(mappedBy="usuario", fetch = FetchType.LAZY)	//un usuario puede tener MUCHAS tareas
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Tarea> tareas;
 	
+	@OneToMany (targetEntity=Usuario.class, mappedBy="USUARIO", fetch = FetchType.LAZY)
+	private Set<Comentario> comentarios;
 
-	@ManyToMany
-	 @JoinTable(
-	   name="PROYECTO_USUARIO",
-	   joinColumns=@JoinColumn(name="ID_USUARIO", referencedColumnName="ID"),
-	   inverseJoinColumns=@JoinColumn(name="ID_PROYECTO", referencedColumnName="ID"))
-	public Set<Proyecto> proyectos ;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Set<Proyecto> proyectos;
 	
+
+	public Set<Tarea> getTareas() {
+		return tareas;
+	}
+
+
+	public void setTareas(Set<Tarea> tareas) {
+		this.tareas = tareas;
+	}
+
+
+	public Set<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+
+	public void setComentarios(Set<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+
 	public Set<Proyecto> getProyectos(){return proyectos;}
 	
 
@@ -72,13 +92,6 @@ public class Usuario extends GenericObject{
 		this.email = email;
 	}
 
-	public Set<Tarea> getTareas() {
-		return tareas;
-	}
-
-	public void setTareas(Set<Tarea> tareas) {
-		this.tareas = tareas;
-	}
 
 	public void setProyectos(Set<Proyecto> proyectos) {
 		this.proyectos = proyectos;
