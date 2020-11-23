@@ -30,6 +30,7 @@ public class Tarea extends GenericObject {
 	@ManyToMany(mappedBy = "Usuarios")
 	private Set<Usuario> usuarios;
 	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PROYECTO")
 	private Proyecto proyecto;
@@ -101,6 +102,8 @@ public class Tarea extends GenericObject {
 		this.ultima_actualizacion = ultima_actualizacion;
 	}
 
+
+
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -116,9 +119,13 @@ public class Tarea extends GenericObject {
 	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}
+	public void addComentario(Comentario comentario)
+	{
+		this.comentarios.add(comentario);
+	}
+	}
 
 
 	
 	
 	
-}

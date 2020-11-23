@@ -93,4 +93,8 @@ public class TareaController {
     }
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dc5efa0aeab7a68445820f3390b02154b94dade3

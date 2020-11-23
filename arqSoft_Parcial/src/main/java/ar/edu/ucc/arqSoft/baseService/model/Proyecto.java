@@ -24,7 +24,7 @@ public class Proyecto extends GenericObject {
 	private Set<Usuario> usuarios;
 	
 	@OneToMany (targetEntity=Usuario.class, mappedBy="TAREA", fetch = FetchType.LAZY)
-	private Set<Tarea>  tareas;
+	private Set<Tarea> tareas;
 	
 	@NotNull
 	@Size(min = 1, max = 250)
@@ -47,23 +47,24 @@ public class Proyecto extends GenericObject {
 	@Enumerated(value = EnumType.ORDINAL)
 	@Column(name = "ESTADO_PROYECTO")
 	private EstadoProyecto estado;
+	
+	
 
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(Set<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setUsuarios(Usuario usuarios) {
+		this.usuarios.add(usuarios);
 	}
 
 	public Set<Tarea> getTareas() {
 		return tareas;
 	}
 
-	public void setTareas(Set<Tarea> tareas) {
-		this.tareas = tareas;
+	public void setTareas(Tarea tareas) {
+		this.tareas.add(tareas);
 	}
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -103,6 +104,8 @@ public class Proyecto extends GenericObject {
 	public void setEstado(EstadoProyecto estado) {
 		this.estado = estado;
 	}
+
+
 
 
 

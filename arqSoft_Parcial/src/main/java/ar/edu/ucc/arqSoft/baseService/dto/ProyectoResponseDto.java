@@ -15,7 +15,7 @@ public class ProyectoResponseDto implements DtoEntity {
 	
 	private String descripcion;
 	
-	private Date fecha_incio;
+	private Date fecha_inicio;
 	
 	private Date fecha_actualizacion;
 	
@@ -41,12 +41,13 @@ public class ProyectoResponseDto implements DtoEntity {
 		this.descripcion = descripcion;
 	}
 
-	public Date getFecha_incio() {
-		return fecha_incio;
+
+	public Date getFecha_inicio() {
+		return fecha_inicio;
 	}
 
-	public void setFecha_incio(Date fecha_incio) {
-		this.fecha_incio = fecha_incio;
+	public void setFecha_inicio(Date fecha_inicio) {
+		this.fecha_inicio = fecha_inicio;
 	}
 
 	public Date getFecha_actualizacion() {
