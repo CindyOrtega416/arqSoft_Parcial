@@ -51,15 +51,6 @@ public class TareaImpDao extends GenericDaoImp<Tarea, Long> implements TareaDao 
 		return em.createQuery(criteria).getResultList();
 	}
 	
-	@Override
-	public Tarea createTarea(String nombre_tarea, String descripcion, Usuario usuario, Proyecto proyecto, Estado estado, Date fecha_inicio,  Date ultima_actualizacion) {
-		
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Tarea> criteria = builder.createQuery(Tarea.class);
-		Root<Tarea> entity = criteria.from(Tarea.class);
-		
-	}		
-	
 	
 	
 }
