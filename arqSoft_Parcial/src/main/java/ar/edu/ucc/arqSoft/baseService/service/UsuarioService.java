@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.ucc.arqSoft.baseService.dao.TareaDao;
 import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
@@ -23,6 +24,9 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioDao usuarioDao;
+	
+	@Autowired
+	private TareaDao tareaDao;
 	
 	public UsuarioResponseDto insertUsuario (UsuarioRequestDto dto) throws EntityNotFoundException, BadRequestException  {
 		
