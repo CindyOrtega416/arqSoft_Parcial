@@ -89,7 +89,7 @@ public class ProyectoService {
 		return response;
 	}
 	
-	public ProyectoResponseDto addUsuario (UsuarioRequestDto req, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
+	public ProyectoResponseDto addUsuario (TareaRequestDto request, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
 		if(id_proyecto<=0)
 		{
 			throw new BadRequestException();
@@ -97,7 +97,7 @@ public class ProyectoService {
 	
 		Proyecto proyecto = proyectoDao.load(id_proyecto);
 		
-		proyecto.setUsuarios(usuarioDao.load(req.getId()));
+		proyecto.setUsuarios(usuarioDao.load(request.getId()));
 		
 		ProyectoResponseDto response = new ProyectoResponseDto();
 		
