@@ -33,7 +33,7 @@ public class TareaService {
 	private UsuarioDao usuarioDao;
 	
 	@Autowired
-	private ProyectoDao proyectoDado;
+	private ProyectoDao proyectoDao;
 	
 	@Autowired
 	private EstadoDao estadoDao;
@@ -91,9 +91,8 @@ public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestE
 		
 		tarea.setNombre_tarea(request.getNombre_tarea());
 		tarea.setDescripcion(request.getDescripcion());
-		//tarea.setUsuarios(request.getId_usuario());
 		tarea.setUsuarios(usuarioDao.load(request.getId_usuario()));
-		tarea.setProyecto(proyectoDado.load(request.getId_proyecto()));
+		tarea.setProyecto(proyectoDao.load(request.getId_proyecto()));
 		tarea.setEstado(estadoDao.load(request.getId_estado()));
 
 		

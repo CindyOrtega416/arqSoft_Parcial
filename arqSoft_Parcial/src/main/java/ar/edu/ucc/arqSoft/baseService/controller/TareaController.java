@@ -1,14 +1,10 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
-import ar.edu.ucc.arqSoft.baseService.dao.TareaDao;
-import ar.edu.ucc.arqSoft.baseService.dto.EstadoRequestDto;
-import ar.edu.ucc.arqSoft.baseService.dto.EstadoResponseDto;
+
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
-import ar.edu.ucc.arqSoft.baseService.model.Tarea;
 import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.baseService.service.TareaService;
-import ar.edu.ucc.arqSoft.common.dto.ModelDtoConverter;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 
@@ -18,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +24,7 @@ import ar.edu.ucc.arqSoft.common.dto.GenericExceptionDto;
 
 
 @Controller
-@RequestMapping("/tarea")
+	@RequestMapping("/tarea")
 public class TareaController {
 	
 	
@@ -91,6 +88,12 @@ public class TareaController {
          
          
     }
+	
+	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody TareaResponseDto saveTarea(@RequestBody TareaRequestDto request) throws BadRequestException {
+		
+		return tareaService.insertTarea(request);
+	}
 
 
 }

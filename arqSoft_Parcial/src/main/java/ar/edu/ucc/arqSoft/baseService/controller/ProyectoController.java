@@ -1,17 +1,10 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
-import ar.edu.ucc.arqSoft.baseService.dao.TareaDao;
-import ar.edu.ucc.arqSoft.baseService.dto.EstadoRequestDto;
-import ar.edu.ucc.arqSoft.baseService.dto.EstadoResponseDto;
-import ar.edu.ucc.arqSoft.baseService.dto.ProyectoRequestDto;
-import ar.edu.ucc.arqSoft.baseService.dto.ProyectoResponseDto;
+
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
-import ar.edu.ucc.arqSoft.baseService.model.Tarea;
 import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
-import ar.edu.ucc.arqSoft.baseService.service.ProyectoService;
 import ar.edu.ucc.arqSoft.baseService.service.TareaService;
-import ar.edu.ucc.arqSoft.common.dto.ModelDtoConverter;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 
@@ -31,50 +24,76 @@ import ar.edu.ucc.arqSoft.common.dto.GenericExceptionDto;
 
 
 @Controller
-@RequestMapping("/tarea")
+	@RequestMapping("/tarea")
 public class ProyectoController {
 	
 	
 	@Autowired
-	private ProyectoService proyectoService;
+	private TareaService tareaService;
 	 
 	@RequestMapping(value="/{nombre}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Object> lookupByNombre(@PathVariable("nombre") String nombre){
     
 		try {
-				List<ProyectoResponseDto> dto = proyectoService.GetByNombre(nombre);
+				List<TareaResponseDto> dto = tareaService.GetByNombre(nombre);
 				return new ResponseEntity<Object>(dto, HttpStatus.OK);
 				
-	}		catch (EntityNotFoundException e) {
+	}catch (EntityNotFoundException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró la tarea");
 			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
 			
 		}	catch (BadRequestException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("1002", "Mal ingresado");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);		
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		
 		}
+         
+         
+    }
+	
+	@RequestMapping(value="/{nombre_tarea}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<Object> lookupByTarea(@PathVariable("nombre_tarea") String nombre_tarea){
+    
+		try {
+				List<TareaResponseDto> dto = tareaService.GetByTarea(nombre_tarea);
+				return new ResponseEntity<Object>(dto, HttpStatus.OK);
+				
+	}
+		catch (EntityNotFoundException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró la tarea");
+			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+			
+		}	catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("1002", "Mal ingresado");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		}  
+    }
+	
+	@RequestMapping(value="/{proyecto}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<Object> lookupByProyecto(@PathVariable("proyecto") Proyecto proyecto){
+    
+		try {
+				List<TareaResponseDto> dto = tareaService.GetByProyecto(proyecto);
+				return new ResponseEntity<Object>(dto, HttpStatus.OK);
+				
+	}catch (EntityNotFoundException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró la tarea");
+			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+			
+		}	catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("1002", "Mal ingresado");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		
+		}
+         
+         
     }
 	
 	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ProyectoResponseDto saveProyecto(@RequestBody ProyectoRequestDto request) {
+	public @ResponseBody TareaResponseDto saveTarea(@RequestBody TareaRequestDto request) throws BadRequestException {
 		
-		return proyectoService.insertProyecto(request);
+		return tareaService.insertTarea(request);
 	}
-	
-	
-	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ProyectoResponseDto addUsuario2Proyecto(@RequestBody TareaRequestDto request, Long id_proyecto ) {
-		
-		return proyectoService.addTarea(request, id_proyecto);
-	}
-	
-	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ProyectoResponseDto addTarea2Proyecto(@RequestBody TareaRequestDto request, Long id_proyecto ) {
-		
-		return proyectoService.addUsuario(request, id_proyecto);
-	}
-	
+
+
 }
-
-
-

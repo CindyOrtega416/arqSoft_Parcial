@@ -24,6 +24,8 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioDao usuarioDao;
+	
+	@Autowired
 	private TareaDao tareaDao;
 	
 	public UsuarioResponseDto insertUsuario (UsuarioRequestDto dto) throws EntityNotFoundException, BadRequestException  {
