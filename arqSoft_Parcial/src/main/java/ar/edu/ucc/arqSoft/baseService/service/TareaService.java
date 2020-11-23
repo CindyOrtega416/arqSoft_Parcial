@@ -101,8 +101,8 @@ public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestE
 		
 		TareaResponseDto response = new TareaResponseDto();
 		
-		response.setNombre(tarea.getNombre_tarea());
-		response.setDescription(tarea.getDescripcion());
+		response.setNombre_tarea(tarea.getNombre_tarea());
+		response.setDescripcion(tarea.getDescripcion());
 		response.setUsuario(tarea.getUsuarios());
 		response.setProyecto(tarea.getProyecto());
 		response.setEstado(tarea.getEstado());
