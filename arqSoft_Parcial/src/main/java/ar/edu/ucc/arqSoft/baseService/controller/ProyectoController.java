@@ -25,7 +25,7 @@ import ar.edu.ucc.arqSoft.common.dto.GenericExceptionDto;
 
 @Controller
 	@RequestMapping("/tarea")
-public class TareaController {
+public class ProyectoController {
 	
 	
 	@Autowired
