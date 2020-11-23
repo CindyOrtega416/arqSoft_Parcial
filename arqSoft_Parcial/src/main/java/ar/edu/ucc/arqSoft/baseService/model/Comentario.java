@@ -24,11 +24,11 @@ public class Comentario extends GenericObject {
 	private String descripcion;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_COMENTARIO")
+	@JoinColumn(name="ID_TAREA")
 	private Tarea tarea;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_COMENTARIO")
+	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
 	
 	@NotNull
