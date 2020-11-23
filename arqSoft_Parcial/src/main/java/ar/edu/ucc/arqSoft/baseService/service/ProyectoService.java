@@ -80,7 +80,7 @@ public class ProyectoService {
 		
 		List<ProyectoResponseDto> response = new ArrayList<ProyectoResponseDto>();
 		for(Proyecto proyecto: proyectos) {
-			if(proyecto.getId()<=0)
+			if(proyecto.getNombre()== null)
 			{
 				throw new BadRequestException();
 			}
