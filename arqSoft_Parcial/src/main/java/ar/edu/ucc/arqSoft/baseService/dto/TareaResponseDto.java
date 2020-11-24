@@ -1,6 +1,6 @@
 package ar.edu.ucc.arqSoft.baseService.dto;
 
-import java.util.Date;
+
 import java.util.Set;
 
 import ar.edu.ucc.arqSoft.baseService.model.Comentario;

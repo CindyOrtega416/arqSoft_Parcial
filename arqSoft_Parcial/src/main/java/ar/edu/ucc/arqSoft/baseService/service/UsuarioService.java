@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.ucc.arqSoft.baseService.dao.TareaDao;
+
 import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
-import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
+
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioResponseDto;
 import ar.edu.ucc.arqSoft.baseService.model.Usuario;
@@ -25,8 +25,6 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioDao usuarioDao;
 	
-	@Autowired
-	private TareaDao tareaDao;
 	
 	public UsuarioResponseDto insertUsuario (UsuarioRequestDto dto) throws EntityNotFoundException, BadRequestException  {
 		
@@ -42,14 +40,15 @@ public class UsuarioService {
 		
 		response.setNombre(usuario.getNombre());
 		response.setApellido(usuario.getApellido());
+		response.setEmail(usuario.getEmail());
 		
 		return response;
 	}
 	
-	public UsuarioResponseDto addTarea(TareaRequestDto req, Long usuarioid) {
+/*	public UsuarioResponseDto addTarea(TareaRequestDto req, Long usuarioid) {
 		Usuario usuario = usuarioDao.load(usuarioid);
 		
-		usuario.setTareas(tareaDao.load(req.getId()));
+		//usuario.setTareas(tareaDao.load(req.getId()));
 		
 		UsuarioResponseDto response = new UsuarioResponseDto();
 		
@@ -57,7 +56,7 @@ public class UsuarioService {
 		
 		return response;
 		
-	}
+	}*/
 	
 	public List<UsuarioResponseDto> GetByNombre(String nombre) throws EntityNotFoundException, BadRequestException {
 		List<Usuario> usuarios = usuarioDao.FindByName(nombre);

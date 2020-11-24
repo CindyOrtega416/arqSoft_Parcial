@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import ar.edu.ucc.arqSoft.common.dto.GenericExceptionDto;
@@ -89,11 +91,51 @@ public class TareaController {
          
     }
 	
-	@RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody TareaResponseDto saveTarea(@RequestBody TareaRequestDto request) throws BadRequestException {
-		
-		return tareaService.insertTarea(request);
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code= HttpStatus.CREATED)
+		public @ResponseBody TareaResponseDto insertTarea(@RequestBody TareaRequestDto request) {
+					try {
+							TareaResponseDto dto = (TareaResponseDto) tareaService.insertTarea(request);
+							return dto;
+							
+					} catch (EntityNotFoundException e) {
+							throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la tarea", e);
+					} catch (BadRequestException e) {
+							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
+					}
 	}
-
+	
+	
+	@RequestMapping(value="/addUsuario/{id]}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code= HttpStatus.CREATED)
+	public @ResponseBody TareaResponseDto addUsuario(@RequestBody TareaRequestDto request, @PathVariable("id") Long id){
+			try {
+				TareaResponseDto dto =(TareaResponseDto) tareaService.addUsuario(request,id);		
+				return dto;
+				
+			} catch (EntityNotFoundException e) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
+				
+			} catch (BadRequestException e) { 
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
+			}
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code= HttpStatus.CREATED)
+	public @ResponseBody TareaResponseDto cambioEstado(@RequestBody TareaRequestDto request, @PathVariable("id") Long id){
+			
+			try {
+				TareaResponseDto dto =(TareaResponseDto) tareaService.cambioEstado(request,id);		
+				return dto;
+				
+			} catch (EntityNotFoundException e) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
+				
+			} catch (BadRequestException e) { 
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
+				
+			}
+	}
 
 }

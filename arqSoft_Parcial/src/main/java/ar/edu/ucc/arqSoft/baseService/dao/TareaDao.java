@@ -11,5 +11,5 @@ public interface TareaDao extends GenericDao<Tarea, Long> {
 	public List<Tarea> FindByName (String nombre);
 	public List<Tarea> findByTarea(String nombre_tarea);
 	public List<Tarea> findByProyecto(Proyecto proyecto);
-
+	
 }

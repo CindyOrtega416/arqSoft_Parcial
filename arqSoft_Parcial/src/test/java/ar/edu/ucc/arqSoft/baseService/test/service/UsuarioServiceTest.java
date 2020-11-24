@@ -7,26 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import ar.edu.ucc.arqSoft.baseService.dto.PeliculaResponseDto;
-import ar.edu.ucc.arqSoft.baseService.service.PeliculaService;
+import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.UsuarioResponseDto;
+import ar.edu.ucc.arqSoft.baseService.service.UsuarioService;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml", "classpath:/spring/applicationContext.xml" })
-public class PeliculaServiceTest{
+
+public class UsuarioServiceTest {
 	
 	@Autowired
-	private PeliculaService peliculaService;
+	private UsuarioService usuarioService;
 	
 	@Test
-	public void testFindById() throws EntityNotFoundException, BadRequestException {
-		PeliculaResponseDto response = peliculaService.getPeliculaById((long) 1);
+	public void testInsert() throws EntityNotFoundException, BadRequestException {
+		UsuarioRequestDto request = new UsuarioRequestDto();
+		request.setNombre("Ignacio");
+		request.setApellido("Achaval");
+		request.setEmail("Igna@gmail");
 		
-		Assert.assertEquals("Resident Evil", response.getTitulo());
+		UsuarioResponseDto response = usuarioService.insertUsuario(request);
+		
+		Assert.assertNotNull(response.getNombre());
 		return;
 	}
-
 }

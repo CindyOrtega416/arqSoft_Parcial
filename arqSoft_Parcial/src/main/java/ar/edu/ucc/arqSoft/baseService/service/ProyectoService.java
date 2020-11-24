@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.ucc.arqSoft.baseService.dao.ComentarioDao;
 import ar.edu.ucc.arqSoft.baseService.dao.ProyectoDao;
 import ar.edu.ucc.arqSoft.baseService.dao.TareaDao;
 import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
@@ -14,6 +15,7 @@ import ar.edu.ucc.arqSoft.baseService.dto.ProyectoRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
+import ar.edu.ucc.arqSoft.baseService.model.Comentario;
 import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.common.dto.ModelDtoConverter;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
@@ -31,6 +33,9 @@ public class ProyectoService {
 	
 	@Autowired
 	private TareaDao tareaDao;
+	
+	@Autowired
+	private ComentarioDao comentarioDao;
 	
 	public ProyectoResponseDto insertProyecto (ProyectoRequestDto request) throws BadRequestException, EntityNotFoundException {
 		
@@ -58,14 +63,22 @@ public class ProyectoService {
 
 	
 	
-	public ProyectoResponseDto addTarea (TareaRequestDto req, Long id_proyecto) throws BadRequestException, EntityNotFoundException{
+	public ProyectoResponseDto addTarea (TareaRequestDto request, Long id_proyecto) throws BadRequestException, EntityNotFoundException{
 		if(id_proyecto<=0)
 		{
 			throw new BadRequestException();
 		}
 		Proyecto proyecto = proyectoDao.load(id_proyecto);
 		
-		proyecto.setTareas(tareaDao.load(req.getId()));
+		proyecto.setTareas(tareaDao.load(request.getId()));
+		
+		Comentario comentario= new Comentario();
+		
+		comentario.setDescripcion("Nueva tarea agregada al proyecto");
+		comentario.setUsuario(usuarioDao.load(null));
+		comentario.setTarea(tareaDao.load(request.getId()));
+		
+		comentarioDao.insert(comentario);
 		
 		ProyectoResponseDto response = new ProyectoResponseDto();
 		
@@ -73,6 +86,7 @@ public class ProyectoService {
 		
 		return response;
 	}
+	
 	
 	
 	public List<ProyectoResponseDto> GetByNombre(String nombre) throws BadRequestException, EntityNotFoundException{
@@ -89,7 +103,9 @@ public class ProyectoService {
 		return response;
 	}
 	
-	public ProyectoResponseDto addUsuario (TareaRequestDto request, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
+	
+	
+	public ProyectoResponseDto addUsuario (UsuarioRequestDto request, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
 		if(id_proyecto<=0)
 		{
 			throw new BadRequestException();
@@ -99,6 +115,14 @@ public class ProyectoService {
 		
 		proyecto.setUsuarios(usuarioDao.load(request.getId()));
 		
+		Comentario comentario= new Comentario();
+		
+		comentario.setDescripcion("Nuevo usuario agregado");
+		comentario.setUsuario(usuarioDao.load(null));
+		comentario.setTarea(null);
+		
+		comentarioDao.insert(comentario);
+		
 		ProyectoResponseDto response = new ProyectoResponseDto();
 		
 		response = (ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto,new ProyectoResponseDto());
@@ -106,4 +130,6 @@ public class ProyectoService {
 		return response;
 	}
 
+	
+	
 }

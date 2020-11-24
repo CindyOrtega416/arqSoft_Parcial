@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.ucc.arqSoft.baseService.dao.EstadoDao;
-import ar.edu.ucc.arqSoft.baseService.dto.EstadoRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.EstadoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.model.Estado;
 import ar.edu.ucc.arqSoft.common.dto.ModelDtoConverter;
@@ -37,20 +36,5 @@ public class EstadoService {
 		return response;
 	}
 	
-	public EstadoResponseDto insertEstado (EstadoRequestDto request) throws BadRequestException{
-		
-		Estado estado = new Estado();
-		
-		estado.setNombre(request.getNombre());
-		estado.setDescripcion(request.getDescripcion());
-		
-		estadoDao.insert(estado);
-		
-		EstadoResponseDto response = new EstadoResponseDto();
-		
-		response.setNombre(estado.getNombre());
-		response.setDescripcion(estado.getDescripcion());		
-		return response;
-		
-	}
+
 }

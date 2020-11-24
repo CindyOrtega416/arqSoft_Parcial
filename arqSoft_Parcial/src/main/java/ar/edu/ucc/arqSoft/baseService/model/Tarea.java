@@ -30,6 +30,9 @@ public class Tarea extends GenericObject {
 	@ManyToMany(mappedBy = "Usuarios")
 	private Set<Usuario> usuarios;
 	
+	//@ManyToOne(fetch = FetchType.LAZY)
+	//@JoinColumn(name="ID_USUARIO")
+	//private Usuario usuario;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_PROYECTO")
@@ -108,14 +111,17 @@ public class Tarea extends GenericObject {
 		return usuarios;
 	}
 
-	public void setUsuarios(Set<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setUsuarios(Usuario usuarios) {
+		this.usuarios.add(usuarios);
 	}
+	
+
 
 	public Set<Comentario> getComentarios() {
 		return comentarios;
 	}
 
+	
 	public void setComentarios(Set<Comentario> comentarios) {
 		this.comentarios = comentarios;
 	}

@@ -34,7 +34,7 @@ public class UsuarioController {
 	 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
-	public @ResponseBody UsuarioResponseDto registrar(@RequestBody UsuarioRequestDto request) {
+	public @ResponseBody UsuarioResponseDto insertUsuario(@RequestBody UsuarioRequestDto request) {
 				try {
 						UsuarioResponseDto dto = (UsuarioResponseDto) usuarioService.insertUsuario(request);
 						return dto;
@@ -48,7 +48,7 @@ public class UsuarioController {
 	
 	 
 		@RequestMapping(value="/{nombre}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	    public @ResponseBody ResponseEntity<Object> lookupByName(@PathVariable("nombre") String nombre){
+	    public @ResponseBody ResponseEntity<Object> lookupByNombre(@PathVariable("nombre") String nombre){
 	    
 			try {
 					List<UsuarioResponseDto> dto = usuarioService.GetByNombre(nombre);

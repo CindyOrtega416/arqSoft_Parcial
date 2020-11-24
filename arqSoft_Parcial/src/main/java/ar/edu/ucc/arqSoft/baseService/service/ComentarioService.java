@@ -31,7 +31,9 @@ public class ComentarioService {
 	@Autowired
 	private ComentarioDao comentarioDao;
 	
-	public ComentarioResponseDto insertComentario (ComentarioRequestDto request) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
+	public ComentarioResponseDto insertComentario(ComentarioRequestDto request) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
+		
+		
 		if(tareaDao.load(request.getId_tarea()).getEstado().getNombre()=="Cerrado")
 		{
 			throw new TareaCerradaException();		//no aceptar comentarios si tarea=cerrada
