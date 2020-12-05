@@ -25,8 +25,8 @@ public class Tarea extends GenericObject {
 	
 	@NotNull
 	@Size(min = 1, max = 250)
-	@Column(name = "NOMBRE_TAREA")
-	private String nombre_tarea;
+	@Column(name = "NOMBRE")
+	private String nombre;
 	
 	@NotNull
 	@Size(min = 1, max = 250)
@@ -62,12 +62,12 @@ public class Tarea extends GenericObject {
 	@OneToMany (targetEntity=Usuario.class, mappedBy="usuario", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
-	public String getNombre_tarea() {
-		return nombre_tarea;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombre_tarea(String nombre_tarea) {
-		this.nombre_tarea = nombre_tarea;
+	public void setNombre_tarea(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public String getDescripcion() {
