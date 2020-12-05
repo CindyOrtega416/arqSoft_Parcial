@@ -6,7 +6,7 @@ public class TareaRequestDto implements DtoEntity {
 	
 	private Long id;
 
-	private String nombre_tarea;
+	private String nombre;
 	
 	private Long id_usuario;
 	
@@ -26,12 +26,12 @@ public class TareaRequestDto implements DtoEntity {
 		this.id = id;
 	}
 
-	public String getNombre_tarea() {
-		return nombre_tarea;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombre_tarea(String nombre_tarea) {
-		this.nombre_tarea = nombre_tarea;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public Long getId_usuario() {

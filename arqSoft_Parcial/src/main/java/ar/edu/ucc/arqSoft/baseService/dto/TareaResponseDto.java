@@ -11,7 +11,7 @@ import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class TareaResponseDto implements DtoEntity {
 	
-	private String nombre_tarea;
+	private String nombre;
 
 	private String descripcion;
 	
@@ -21,20 +21,19 @@ public class TareaResponseDto implements DtoEntity {
 	
 	private Proyecto proyecto;
 	
-	private Set<ComentarioResponseDto> comentarios;
 	
 	private Estado estado;
 
 
 
 
-	public String getNombre_tarea() {
-		return nombre_tarea;
+	public String getNombre() {
+		return nombre;
 	}
 
 
-	public void setNombre_tarea(String nombre_tarea) {
-		this.nombre_tarea = nombre_tarea;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 
@@ -89,25 +88,6 @@ public class TareaResponseDto implements DtoEntity {
 		this.estado = estado;
 	}
 
-	public Set<ComentarioResponseDto> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(Set<ComentarioResponseDto> comentarios) {
-		this.comentarios = comentarios;
-	}
-	
-	public void addComentarios(Comentario comentario)
-	{
-		ComentarioResponseDto comentarioDto=new ComentarioResponseDto();
-		comentarioDto.setDescripcion(comentario.getDescripcion());
-		comentarioDto.setNombre(comentario.getNombre());
-		comentarioDto.setTarea(comentario.getTarea());
-		comentarioDto.setUsuario(comentario.getUsuario());
-		this.comentarios.add(comentarioDto);
-	}
-
-	
 	
 
 }
