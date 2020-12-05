@@ -34,7 +34,7 @@ public class UsuarioController {
 	 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
-	public @ResponseBody UsuarioResponseDto insertUsuario(@RequestBody UsuarioRequestDto request) {
+	public @ResponseBody UsuarioResponseDto register(@RequestBody UsuarioRequestDto request) {
 				try {
 						UsuarioResponseDto dto = (UsuarioResponseDto) usuarioService.insertUsuario(request);
 						return dto;
@@ -47,23 +47,19 @@ public class UsuarioController {
 	
 	
 	 
-		@RequestMapping(value="/{nombre}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	    public @ResponseBody ResponseEntity<Object> lookupByNombre(@PathVariable("nombre") String nombre){
-	    
+	 @SuppressWarnings("unchecked")
+	 @RequestMapping(value="/{nombre}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	 @ResponseStatus(code= HttpStatus.CREATED)
+	 public @ResponseBody List<UsuarioResponseDto> getbyName(@PathVariable("nombre") String nombre){
 			try {
-					List<UsuarioResponseDto> dto = usuarioService.GetByNombre(nombre);
-					return new ResponseEntity<Object>(dto, HttpStatus.OK);
-					
-		}catch (EntityNotFoundException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("1001", "Usuario no encontrado");
-				return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-				
-			}	catch (BadRequestException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("1002", "ID invalido");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			
+				UsuarioResponseDto dto =(UsuarioResponseDto) usuarioService.GetByNombre(nombre);		
+				return (List<UsuarioResponseDto>) dto;
+			} catch (EntityNotFoundException e) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado", e);
+			} catch (BadRequestException e) { 
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
 			}
-	         
+	}
 	         
 	    }
-}
+

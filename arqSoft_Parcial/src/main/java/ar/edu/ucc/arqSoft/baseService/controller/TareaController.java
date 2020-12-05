@@ -32,79 +32,32 @@ public class TareaController {
 	
 	@Autowired
 	private TareaService tareaService;
-	 
-	@RequestMapping(value="/{nombre}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> lookupByNombre(@PathVariable("nombre") String nombre){
-    
-		try {
-				List<TareaResponseDto> dto = tareaService.GetByNombre(nombre);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-	}catch (EntityNotFoundException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró la tarea");
-			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-			
-		}	catch (BadRequestException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("1002", "Mal ingresado");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-		
-		}
-         
-         
-    }
-	
-	@RequestMapping(value="/{nombre_tarea}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> lookupByTarea(@PathVariable("nombre_tarea") String nombre_tarea){
-    
-		try {
-				List<TareaResponseDto> dto = tareaService.GetByTarea(nombre_tarea);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-	}
-		catch (EntityNotFoundException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró la tarea");
-			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-			
-		}	catch (BadRequestException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("1002", "Mal ingresado");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-		}  
-    }
-	
-	@RequestMapping(value="/{proyecto}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> lookupByProyecto(@PathVariable("proyecto") Proyecto proyecto){
-    
-		try {
-				List<TareaResponseDto> dto = tareaService.GetByProyecto(proyecto);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-	}catch (EntityNotFoundException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró la tarea");
-			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-			
-		}	catch (BadRequestException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("1002", "Mal ingresado");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-		
-		}
-         
-         
-    }
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
-		public @ResponseBody TareaResponseDto insertTarea(@RequestBody TareaRequestDto request) {
+		public @ResponseBody TareaResponseDto register(@RequestBody TareaRequestDto request) {
 					try {
 							TareaResponseDto dto = (TareaResponseDto) tareaService.insertTarea(request);
 							return dto;
-							
 					} catch (EntityNotFoundException e) {
-							throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la tarea", e);
+							throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
 					} catch (BadRequestException e) {
-							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
+							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
 					}
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code= HttpStatus.CREATED)
+	public @ResponseBody TareaResponseDto cambioEstado(@RequestBody TareaRequestDto request, @PathVariable("id") Long id){
+			try {
+				TareaResponseDto dto =(TareaResponseDto) tareaService.cambioEstado(request,id);		
+				return dto;
+			} catch (EntityNotFoundException e) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
+			} catch (BadRequestException e) { 
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
+			}
+	}
 	
 	@RequestMapping(value="/addUsuario/{id]}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
@@ -112,30 +65,25 @@ public class TareaController {
 			try {
 				TareaResponseDto dto =(TareaResponseDto) tareaService.addUsuario(request,id);		
 				return dto;
-				
 			} catch (EntityNotFoundException e) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
-				
 			} catch (BadRequestException e) { 
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
 			}
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/{nombre}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
-	public @ResponseBody TareaResponseDto cambioEstado(@RequestBody TareaRequestDto request, @PathVariable("id") Long id){
-			
+	public @ResponseBody List<TareaResponseDto> getbyName(@PathVariable("nombre") String nombre){
 			try {
-				TareaResponseDto dto =(TareaResponseDto) tareaService.cambioEstado(request,id);		
-				return dto;
-				
+				TareaResponseDto dto =(TareaResponseDto) tareaService.GetByNombre(nombre);		
+				return (List<TareaResponseDto>) dto;
 			} catch (EntityNotFoundException e) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
-				
 			} catch (BadRequestException e) { 
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
-				
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
 			}
 	}
-
 }
