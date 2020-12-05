@@ -50,8 +50,8 @@ public class Usuario extends GenericObject{
 	}
 
 
-	public void setTareas(Set<Tarea> tareas) {
-		this.tareas = tareas;
+	public void setTareas(Tarea tareas) {
+		this.tareas.add(tareas);
 	}
 
 
@@ -65,7 +65,14 @@ public class Usuario extends GenericObject{
 	}
 
 
-	public Set<Proyecto> getProyectos(){return proyectos;}
+	public Set<Proyecto> getProyectos(){
+		return proyectos;
+		
+	}
+	
+	public void setProyectos(Set<Proyecto> proyectos) {
+		this.proyectos = proyectos;
+	}
 	
 
 	public String getNombre() {
@@ -93,10 +100,6 @@ public class Usuario extends GenericObject{
 	}
 
 
-	public void setProyectos(Set<Proyecto> proyectos) {
-		this.proyectos = proyectos;
-	}
-	
 		
 
 

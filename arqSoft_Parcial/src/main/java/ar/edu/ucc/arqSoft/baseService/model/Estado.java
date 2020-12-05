@@ -4,13 +4,17 @@ package ar.edu.ucc.arqSoft.baseService.model;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ar.edu.ucc.arqSoft.common.model.GenericObject;
 
+@Entity
+@Table(name="ESTADO")
 public class Estado extends GenericObject{
 	
 	@NotNull
@@ -18,12 +22,12 @@ public class Estado extends GenericObject{
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@NotNull
+	
 	@Size(min = 1, max = 500)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 	
-	@OneToMany(targetEntity= Usuario.class,  mappedBy="tarea", fetch = FetchType.LAZY)
+	@OneToMany(targetEntity= Usuario.class,  mappedBy="Tarea", fetch = FetchType.LAZY)
 	private Set<Tarea> tareas;
 
 	public String getNombre() {
