@@ -63,20 +63,20 @@ public class ProyectoService {
 
 	
 	
-	public ProyectoResponseDto addTarea (TareaRequestDto request, Long id_proyecto) throws BadRequestException, EntityNotFoundException{
+	public ProyectoResponseDto addTarea (TareaRequestDto req, Long id_proyecto) throws BadRequestException, EntityNotFoundException{
 		if(id_proyecto<=0)
 		{
 			throw new BadRequestException();
 		}
 		Proyecto proyecto = proyectoDao.load(id_proyecto);
 		
-		proyecto.setTareas(tareaDao.load(request.getId()));
+		proyecto.setTareas(tareaDao.load(req.getId()));
 		
 		Comentario comentario= new Comentario();
 		
 		comentario.setDescripcion("Nueva tarea agregada al proyecto");
 		comentario.setUsuario(usuarioDao.load(null));
-		comentario.setTarea(tareaDao.load(request.getId()));
+		comentario.setTarea(tareaDao.load(req.getId()));
 		
 		comentarioDao.insert(comentario);
 		
@@ -105,7 +105,7 @@ public class ProyectoService {
 	
 	
 	
-	public ProyectoResponseDto addUsuario (UsuarioRequestDto request, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
+	public ProyectoResponseDto addUsuario (UsuarioRequestDto req, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
 		if(id_proyecto<=0)
 		{
 			throw new BadRequestException();
@@ -113,7 +113,7 @@ public class ProyectoService {
 	
 		Proyecto proyecto = proyectoDao.load(id_proyecto);
 		
-		proyecto.setUsuarios(usuarioDao.load(request.getId()));
+		proyecto.setUsuarios(usuarioDao.load(req.getId()));
 		
 		Comentario comentario= new Comentario();
 		

@@ -61,7 +61,7 @@ public class TareaService {
 		return response;
 	}
 	
-	public List<TareaResponseDto> GetByTarea(String nombre_tarea) throws EntityNotFoundException, BadRequestException {
+/*	public List<TareaResponseDto> GetByTarea(String nombre_tarea) throws EntityNotFoundException, BadRequestException {
 		List<Tarea> tareas = tareaDao.findByTarea(nombre_tarea);
 		
 		List<TareaResponseDto> response = new ArrayList<TareaResponseDto>();
@@ -75,8 +75,8 @@ public class TareaService {
 		}
 		return response;
 	}
-	
-	public List<TareaResponseDto> GetByProyecto(Proyecto proyecto) throws EntityNotFoundException, BadRequestException {
+*/	
+	/*public List<TareaResponseDto> GetByProyecto(Proyecto proyecto) throws EntityNotFoundException, BadRequestException {
 		List<Tarea> tareas = tareaDao.findByProyecto(proyecto);
 		
 		List<TareaResponseDto> response = new ArrayList<TareaResponseDto>();
@@ -91,13 +91,13 @@ public class TareaService {
 		return response;
 	}
 	
+*/	
 	
-	
-public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestException, EntityNotFoundException{
+	public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestException, EntityNotFoundException{
 		
 		Tarea tarea = new Tarea();
 		
-		tarea.setNombre_tarea(request.getNombre_tarea());
+		tarea.setNombre(request.getNombre());
 		tarea.setDescripcion(request.getDescripcion());
 		tarea.setProyecto(proyectoDao.load(request.getId_proyecto()));
 		tarea.setEstado(estadoDao.load(request.getId_estado()));
@@ -107,7 +107,7 @@ public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestE
 		
 		TareaResponseDto response = new TareaResponseDto();
 		
-		response.setNombre_tarea(tarea.getNombre_tarea());
+		response.setNombre(tarea.getNombre());
 		response.setDescripcion(tarea.getDescripcion());
 		response.setProyecto(tarea.getProyecto());
 		response.setEstado(tarea.getEstado());
@@ -117,9 +117,9 @@ public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestE
 		
 	}
 
-public TareaResponseDto addUsuario(TareaRequestDto request, Long id_usuario)throws BadRequestException, EntityNotFoundException {
+public TareaResponseDto addUsuario(TareaRequestDto req, Long id_usuario) throws BadRequestException, EntityNotFoundException {
 	
-	Tarea tarea = tareaDao.load(request.getId());
+	Tarea tarea = tareaDao.load(req.getId());
 	
     if(id_usuario<=0)
     {
@@ -134,13 +134,13 @@ public TareaResponseDto addUsuario(TareaRequestDto request, Long id_usuario)thro
 	
 	comentario.setDescripcion("Nuevo usuario agregado");
 	comentario.setUsuario(usuarioDao.load(null));
-	comentario.setTarea(tareaDao.load(request.getId()));
+	comentario.setTarea(tareaDao.load(req.getId()));
 	
 	comentarioDao.insert(comentario);
 	
     TareaResponseDto response = new TareaResponseDto();
 
-    response = (TareaResponseDto) new ModelDtoConverter().convertToDto(id_usuario,new TareaResponseDto());
+    response = (TareaResponseDto) new ModelDtoConverter().convertToDto(tarea,new TareaResponseDto());
 
     return response;
 }

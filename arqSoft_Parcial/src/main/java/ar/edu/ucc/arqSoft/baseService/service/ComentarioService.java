@@ -15,6 +15,7 @@ import ar.edu.ucc.arqSoft.baseService.dto.ComentarioRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ComentarioResponseDto;
 import ar.edu.ucc.arqSoft.baseService.exception.TareaCerradaException;
 import ar.edu.ucc.arqSoft.baseService.model.Comentario;
+import ar.edu.ucc.arqSoft.baseService.model.Tarea;
 import ar.edu.ucc.arqSoft.common.dto.ModelDtoConverter;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
@@ -31,7 +32,7 @@ public class ComentarioService {
 	@Autowired
 	private ComentarioDao comentarioDao;
 	
-	public ComentarioResponseDto insertComentario(ComentarioRequestDto request) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
+public ComentarioResponseDto insertComentario(ComentarioRequestDto request) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
 		
 		
 		if(tareaDao.load(request.getId_tarea()).getEstado().getNombre()=="Cerrado")

@@ -26,13 +26,13 @@ public class UsuarioService {
 	private UsuarioDao usuarioDao;
 	
 	
-	public UsuarioResponseDto insertUsuario (UsuarioRequestDto dto) throws EntityNotFoundException, BadRequestException  {
+	public UsuarioResponseDto insertUsuario (UsuarioRequestDto request) throws EntityNotFoundException, BadRequestException  {
 		
 		Usuario usuario = new Usuario();
 		
-		usuario.setNombre(dto.getNombre());
-		usuario.setApellido(dto.getApellido());
-		usuario.setEmail(dto.getEmail());
+		usuario.setNombre(request.getNombre());
+		usuario.setApellido(request.getApellido());
+		usuario.setEmail(request.getEmail());
 		
 		usuarioDao.insert(usuario);
 		

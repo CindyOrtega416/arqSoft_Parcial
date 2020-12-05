@@ -66,7 +66,7 @@ public class Tarea extends GenericObject {
 		return nombre;
 	}
 
-	public void setNombre_tarea(String nombre) {
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
