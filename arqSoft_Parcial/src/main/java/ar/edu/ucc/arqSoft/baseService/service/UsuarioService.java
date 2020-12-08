@@ -26,24 +26,23 @@ public class UsuarioService {
 	private UsuarioDao usuarioDao;
 	
 	
-	public UsuarioResponseDto insertUsuario (UsuarioRequestDto request) throws EntityNotFoundException, BadRequestException  {
+	public UsuarioResponseDto insertUsuario (UsuarioRequestDto request) throws BadRequestException  {
 		
-		Usuario usuario = new Usuario();
+		Usuario usuario = (Usuario) new ModelDtoConverter().convertToEntity(new Usuario(), request);
 		
-		usuario.setNombre(request.getNombre());
-		usuario.setApellido(request.getApellido());
-		usuario.setEmail(request.getEmail());
+		try {
 		
-		usuarioDao.insert(usuario);
+			usuarioDao.insert(usuario);
+		}
 		
-		UsuarioResponseDto response = new UsuarioResponseDto();
-		
-		response.setNombre(usuario.getNombre());
-		response.setApellido(usuario.getApellido());
-		response.setEmail(usuario.getEmail());
-		
+		catch(BadRequestException e){
+			
+			throw new BadRequestException();
+		}
+		UsuarioResponseDto response = (UsuarioResponseDto) new ModelDtoConverter().convertToDto(usuario, new UsuarioResponseDto());	
 		return response;
-	}
+		}
+	
 	
 /*	public UsuarioResponseDto addTarea(TareaRequestDto req, Long usuarioid) {
 		Usuario usuario = usuarioDao.load(usuarioid);
@@ -58,20 +57,21 @@ public class UsuarioService {
 		
 	}*/
 	
-	public List<UsuarioResponseDto> GetByNombre(String nombre) throws EntityNotFoundException, BadRequestException {
-		List<Usuario> usuarios = usuarioDao.FindByName(nombre);
+	public UsuarioResponseDto getUsuarioById(Long id) throws EntityNotFoundException, BadRequestException {
 		
-		List<UsuarioResponseDto> response = new ArrayList<UsuarioResponseDto>();
-		for(Usuario usuario: usuarios) 
+		if (id <= 0)
 		{
-			if(usuario.getId()<=0)
-			{
-				throw new BadRequestException();
-			}
-		response.add((UsuarioResponseDto) new ModelDtoConverter().convertToDto(usuario,new UsuarioResponseDto()));
+			throw new BadRequestException();
 		}
+		Usuario usuario = usuarioDao.load(id);
+		
+		UsuarioResponseDto response = new UsuarioResponseDto();
+				
+		response.setId(usuario.getId());
+		response.setNombre(usuario.getNombre());
+		response.setApellido(usuario.getApellido());
+		response.setEmail(usuario.getEmail());
+		
 		return response;
-	
 	}
-	
 }

@@ -8,7 +8,6 @@ import ar.edu.ucc.arqSoft.common.dao.GenericDao;
 
 public interface TareaDao extends GenericDao<Tarea, Long> {
 	
-	public List<Tarea> FindByName (String nombre);
 
 	
 }

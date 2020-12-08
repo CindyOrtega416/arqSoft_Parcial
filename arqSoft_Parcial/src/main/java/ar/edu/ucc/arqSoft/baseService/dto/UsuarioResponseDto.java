@@ -6,6 +6,8 @@ import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class UsuarioResponseDto implements DtoEntity{
+	
+	private Long id;
 
 	private String nombre;
 	
@@ -13,6 +15,15 @@ public class UsuarioResponseDto implements DtoEntity{
 	
 	private String email;
 	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -39,6 +50,7 @@ public class UsuarioResponseDto implements DtoEntity{
 	}
 
 
-	
+	}
 
-}
+
+	

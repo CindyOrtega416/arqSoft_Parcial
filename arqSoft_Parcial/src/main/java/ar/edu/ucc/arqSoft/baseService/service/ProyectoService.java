@@ -37,6 +37,49 @@ public class ProyectoService {
 	@Autowired
 	private ComentarioDao comentarioDao;
 	
+	 public ProyectoResponseDto getProyectoById(Long id) throws EntityNotFoundException, BadRequestException {
+			if (id <= 0)
+			{
+				throw new BadRequestException();
+			}
+	    	Proyecto proyecto = proyectoDao.load(id);
+	                
+	    	ProyectoResponseDto response = (ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new ProyectoResponseDto());	
+	        return response;
+	    }
+		
+	
+	 
+		public List<ProyectoResponseDto> GetByNombre(String nombre) throws BadRequestException, EntityNotFoundException{
+			List<Proyecto> proyectos = proyectoDao.FindByName(nombre);
+			
+			List<ProyectoResponseDto> response = new ArrayList<ProyectoResponseDto>();
+			for(Proyecto proyecto: proyectos) {
+				if(proyecto.getNombre()== null)
+				{
+					throw new BadRequestException();
+				}
+			response.add((ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto,new ProyectoResponseDto()));
+			}
+			return response;
+		}
+		
+		
+	 
+		public List<ProyectoResponseDto> getAllProyectos() {
+			List<Proyecto> proyectos = proyectoDao.getAll();
+			
+			List<ProyectoResponseDto> response = new ArrayList<ProyectoResponseDto>();
+			 
+			for (Proyecto proyecto : proyectos) {
+				response.add((ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new ProyectoResponseDto()));
+			}
+			
+			return response;
+		}
+		
+		
+	 
 	public ProyectoResponseDto insertProyecto (ProyectoRequestDto request) throws BadRequestException, EntityNotFoundException {
 		
 		Proyecto proyecto= new Proyecto();
@@ -87,21 +130,6 @@ public class ProyectoService {
 		return response;
 	}
 	
-	
-	
-	public List<ProyectoResponseDto> GetByNombre(String nombre) throws BadRequestException, EntityNotFoundException{
-		List<Proyecto> proyectos = proyectoDao.FindByName(nombre);
-		
-		List<ProyectoResponseDto> response = new ArrayList<ProyectoResponseDto>();
-		for(Proyecto proyecto: proyectos) {
-			if(proyecto.getNombre()== null)
-			{
-				throw new BadRequestException();
-			}
-		response.add((ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto,new ProyectoResponseDto()));
-		}
-		return response;
-	}
 	
 	
 	

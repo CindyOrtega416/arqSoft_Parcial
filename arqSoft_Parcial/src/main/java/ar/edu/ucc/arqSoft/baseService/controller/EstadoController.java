@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import ar.edu.ucc.arqSoft.baseService.dto.EstadoResponseDto;
 
@@ -28,17 +26,33 @@ public class EstadoController {
 	@Autowired
 	private EstadoService estadoService;
 	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/{nombre}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code= HttpStatus.CREATED)
-	public @ResponseBody List<EstadoResponseDto> getbyName(@PathVariable("nombre") String nombre){
-			try {
-				EstadoResponseDto dto =(EstadoResponseDto) estadoService.GetByNombre(nombre);		
-				return (List<EstadoResponseDto>) dto;
+	  @RequestMapping(method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	    public @ResponseBody List<EstadoResponseDto> getAllEstados()
+	    {
+	        return estadoService.getAllEstados();
+	    }
+
+	  
+	  
+	    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	    public @ResponseBody ResponseEntity<Object> lookupEstadoById(@PathVariable("id") Long id) throws EntityNotFoundException
+	    {
+	        try {
+				EstadoResponseDto dto = estadoService.getEstadoById(id);
+				return new ResponseEntity<Object>(dto, HttpStatus.OK);
+				
 			} catch (EntityNotFoundException e) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Estado no encontrado", e);
-			} catch (BadRequestException e) { 
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
+				GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró el estado");
+				return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+				
+			} catch (BadRequestException e) {
+				GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
+				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+				
+			}catch (Exception e) {
+				GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
 			}
-	}
+	    }
+	    
 }

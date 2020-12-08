@@ -15,16 +15,7 @@ import ar.edu.ucc.arqSoft.common.dao.GenericDaoImp;
 @Repository
 public class TareaImpDao extends GenericDaoImp<Tarea, Long> implements TareaDao {
 
-	@Override
-	public List<Tarea> FindByName (String nombre){
 
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Tarea> criteria = builder.createQuery(Tarea.class);
-        Root<Tarea> entity = criteria.from(Tarea.class);
-
-        criteria.select(entity).where(builder.equal(entity.get("nombre"+" "+"apellido"), nombre));
-        return em.createQuery(criteria).getResultList();
-	}
 	
 
 }

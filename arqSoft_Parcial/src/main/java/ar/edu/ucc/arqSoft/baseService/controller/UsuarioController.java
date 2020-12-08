@@ -1,6 +1,5 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +37,7 @@ public class UsuarioController {
 				try {
 						UsuarioResponseDto dto = (UsuarioResponseDto) usuarioService.insertUsuario(request);
 						return dto;
-				} catch (EntityNotFoundException e) {
-						throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado", e);
+		
 				} catch (BadRequestException e) {
 						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
 				}
@@ -47,19 +45,24 @@ public class UsuarioController {
 	
 	
 	 
-	 @SuppressWarnings("unchecked")
-	 @RequestMapping(value="/{nombre}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	 @ResponseStatus(code= HttpStatus.CREATED)
-	 public @ResponseBody List<UsuarioResponseDto> getbyName(@PathVariable("nombre") String nombre){
-			try {
-				UsuarioResponseDto dto =(UsuarioResponseDto) usuarioService.GetByNombre(nombre);		
-				return (List<UsuarioResponseDto>) dto;
-			} catch (EntityNotFoundException e) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado", e);
-			} catch (BadRequestException e) { 
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
-			}
-	}
-	         
+	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<Object> lookupUsuarioById(@PathVariable("id") Long id){
+    
+		try {
+				UsuarioResponseDto dto = usuarioService.getUsuarioById(id);
+				return new ResponseEntity<Object>(dto, HttpStatus.OK);
+				
+	}catch (EntityNotFoundException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró el usuario");
+			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+			
+		}	catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("1002", "ID inválido");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		
+		}
+         
+         
+    }
 	    }
 

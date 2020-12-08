@@ -32,6 +32,26 @@ public class ComentarioService {
 	@Autowired
 	private ComentarioDao comentarioDao;
 	
+	
+public ComentarioResponseDto getComentarioById (Long id) throws EntityNotFoundException, BadRequestException {
+		
+		if (id <= 0) {
+			throw new BadRequestException();		//no aceptar id<=0
+		}
+		Comentario comentario=comentarioDao.load(id);
+	
+		ComentarioResponseDto dto=new ComentarioResponseDto();
+		dto.setDescripcion(comentario.getDescripcion());
+		dto.setFecha(comentario.getFecha());
+		dto.setNombre(comentario.getNombre());
+		dto.setTarea(comentario.getTarea());
+		dto.setUsuario(comentario.getUsuario());
+		
+	
+		return dto;
+		
+	}
+
 public ComentarioResponseDto insertComentario(ComentarioRequestDto request) throws EntityNotFoundException, BadRequestException, TareaCerradaException {
 		
 		
@@ -63,24 +83,7 @@ public ComentarioResponseDto insertComentario(ComentarioRequestDto request) thro
 		
 	}
 	
-	public ComentarioResponseDto getComentarioById (Long id) throws EntityNotFoundException, BadRequestException {
-		
-		if (id <= 0) {
-			throw new BadRequestException();		//no aceptar id<=0
-		}
-		Comentario comentario=comentarioDao.load(id);
 	
-		ComentarioResponseDto dto=new ComentarioResponseDto();
-		dto.setDescripcion(comentario.getDescripcion());
-		dto.setFecha(comentario.getFecha());
-		dto.setNombre(comentario.getNombre());
-		dto.setTarea(comentario.getTarea());
-		dto.setUsuario(comentario.getUsuario());
-		
-	
-		return dto;
-		
-	}
 	public List<ComentarioResponseDto> getAllComentariosFromTarea(Long Id_tarea) {		//mostrar todos los comentarios en tarea
 		List<Comentario> comentarios = comentarioDao.getAll();
 		

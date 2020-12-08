@@ -1,7 +1,5 @@
 package ar.edu.ucc.arqSoft.baseService.service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,7 @@ import ar.edu.ucc.arqSoft.baseService.dao.ComentarioDao;
 import ar.edu.ucc.arqSoft.baseService.dao.EstadoDao;
 import ar.edu.ucc.arqSoft.baseService.dao.ProyectoDao;
 import ar.edu.ucc.arqSoft.baseService.dto.ComentarioRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.ComentarioResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.EstadoRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.EstadoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
@@ -46,21 +45,7 @@ public class TareaService {
 	@Autowired
 	private ComentarioDao comentarioDao;
 
-	public List<TareaResponseDto> GetByNombre(String nombre) throws EntityNotFoundException, BadRequestException {
-		List<Tarea> tareas = tareaDao.FindByName(nombre);
-		
-		List<TareaResponseDto> response = new ArrayList<TareaResponseDto>();
-		for(Tarea tarea: tareas) 
-		{
-			if(tarea.getId()<=0)
-			{
-				throw new BadRequestException();
-			}
-		response.add((TareaResponseDto) new ModelDtoConverter().convertToDto(tarea,new TareaResponseDto()));
-		}
-		return response;
-	}
-	
+
 /*	public List<TareaResponseDto> GetByTarea(String nombre_tarea) throws EntityNotFoundException, BadRequestException {
 		List<Tarea> tareas = tareaDao.findByTarea(nombre_tarea);
 		
@@ -92,6 +77,38 @@ public class TareaService {
 	}
 	
 */	
+/*	public TareaResponseDto getTareaById(Long id) throws EntityNotFoundException, BadRequestException {
+		if (id <= 0) {
+			throw new BadRequestException();
+		}
+		Tarea tarea = tareaDao.load(id);
+		tareaDao.insert(tarea);
+
+		TareaResponseDto response = new TareaResponseDto();
+		
+		return response;
+
+	//	return taskResponseGenerator(response, task);
+		
+		if (id <= 0) {
+			throw new BadRequestException();		//no aceptar id<=0
+		}
+		Comentario comentario=comentarioDao.load(id);
+	
+		ComentarioResponseDto dto=new ComentarioResponseDto();
+		dto.setDescripcion(comentario.getDescripcion());
+		dto.setFecha(comentario.getFecha());
+		dto.setNombre(comentario.getNombre());
+		dto.setTarea(comentario.getTarea());
+		dto.setUsuario(comentario.getUsuario());
+		
+	
+		return dto;
+		
+	}
+*/
+
+	
 	
 	public TareaResponseDto insertTarea (TareaRequestDto request) throws BadRequestException, EntityNotFoundException{
 		
