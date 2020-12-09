@@ -1,6 +1,9 @@
 package ar.edu.ucc.arqSoft.baseService.service;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,7 @@ import ar.edu.ucc.arqSoft.baseService.dto.EstadoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.UsuarioResponseDto;
 import ar.edu.ucc.arqSoft.baseService.model.Comentario;
 import ar.edu.ucc.arqSoft.baseService.model.Estado;
 import ar.edu.ucc.arqSoft.baseService.model.Tarea;
@@ -77,36 +81,40 @@ public class TareaService {
 	}
 	
 */	
-/*	public TareaResponseDto getTareaById(Long id) throws EntityNotFoundException, BadRequestException {
-		if (id <= 0) {
+	public TareaResponseDto getTareaById(Long id) throws EntityNotFoundException, BadRequestException {
+		
+		if (id <= 0)
+		{
 			throw new BadRequestException();
 		}
 		Tarea tarea = tareaDao.load(id);
-		tareaDao.insert(tarea);
-
+		
 		TareaResponseDto response = new TareaResponseDto();
+				
+		response.setNombre(tarea.getNombre());
+		response.setDescripcion(tarea.getDescripcion());
+		response.setProyecto(tarea.getProyecto());
+		response.setEstado(tarea.getEstado());
+		response.setUsuario(tarea.getUsuarios());
 		
 		return response;
-
-	//	return taskResponseGenerator(response, task);
-		
-		if (id <= 0) {
-			throw new BadRequestException();		//no aceptar id<=0
-		}
-		Comentario comentario=comentarioDao.load(id);
-	
-		ComentarioResponseDto dto=new ComentarioResponseDto();
-		dto.setDescripcion(comentario.getDescripcion());
-		dto.setFecha(comentario.getFecha());
-		dto.setNombre(comentario.getNombre());
-		dto.setTarea(comentario.getTarea());
-		dto.setUsuario(comentario.getUsuario());
-		
-	
-		return dto;
-		
 	}
-*/
+
+	
+	public List<TareaResponseDto> getAllTareas() {
+		
+        List <Tarea> tareas = tareaDao.getAll();
+
+        List<TareaResponseDto> response = new ArrayList<TareaResponseDto>();
+
+        for (Tarea Tarea : tareas) {
+          
+        	response.add((TareaResponseDto) new ModelDtoConverter().convertToDto(Tarea, new TareaResponseDto()));
+        }
+        		return response;
+	
+	}
+	
 
 	
 	
@@ -161,6 +169,7 @@ public TareaResponseDto addUsuario(TareaRequestDto req, Long id_usuario) throws 
 
     return response;
 }
+
 
 public TareaResponseDto cambioEstado(TareaRequestDto request, Long id ) throws BadRequestException, EntityNotFoundException
 {

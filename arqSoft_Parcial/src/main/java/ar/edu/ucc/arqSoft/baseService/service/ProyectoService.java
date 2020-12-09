@@ -133,7 +133,7 @@ public class ProyectoService {
 	
 	
 	
-	public ProyectoResponseDto addUsuario (UsuarioRequestDto req, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
+	public ProyectoResponseDto addUsuario (ProyectoRequestDto req, Long id_proyecto)throws BadRequestException, EntityNotFoundException {
 		if(id_proyecto<=0)
 		{
 			throw new BadRequestException();

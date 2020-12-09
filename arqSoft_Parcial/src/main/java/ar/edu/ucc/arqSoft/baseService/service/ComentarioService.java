@@ -40,16 +40,16 @@ public ComentarioResponseDto getComentarioById (Long id) throws EntityNotFoundEx
 		}
 		Comentario comentario=comentarioDao.load(id);
 	
-		ComentarioResponseDto dto=new ComentarioResponseDto();
+		ComentarioResponseDto response=new ComentarioResponseDto();
 		
-		dto.setDescripcion(comentario.getDescripcion());
-		dto.setFecha(comentario.getFecha());
-		dto.setNombre(comentario.getNombre());
-		dto.setTarea(comentario.getTarea());
-		dto.setUsuario(comentario.getUsuario());
+		response.setDescripcion(comentario.getDescripcion());
+		response.setFecha(comentario.getFecha());
+		response.setNombre(comentario.getNombre());
+		response.setTarea(comentario.getTarea());
+		response.setUsuario(comentario.getUsuario());
 		
 	
-		return dto;
+		return response;
 		
 	}
 

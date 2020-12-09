@@ -7,6 +7,8 @@ import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class ProyectoRequestDto implements DtoEntity {
 	
+	private Long id;
+	
 	private String nombre;
 	
 	private String descripcion;
@@ -18,6 +20,16 @@ public class ProyectoRequestDto implements DtoEntity {
 	private EstadoProyecto estado;
 	
 	private Long id_usuario;
+
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNombre() {
 		return nombre;

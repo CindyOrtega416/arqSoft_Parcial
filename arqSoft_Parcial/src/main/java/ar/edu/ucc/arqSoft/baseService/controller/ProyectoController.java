@@ -4,14 +4,18 @@ package ar.edu.ucc.arqSoft.baseService.controller;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.UsuarioResponseDto;
 import ar.edu.ucc.arqSoft.baseService.service.ProyectoService;
+import ar.edu.ucc.arqSoft.common.dto.GenericExceptionDto;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +37,15 @@ public class ProyectoController {
 	@Autowired
 	private ProyectoService proyectoService;
 	 
+	
+	  @RequestMapping(method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+      public @ResponseBody List<ProyectoResponseDto> getAllProyectos(){
+		  
+          return proyectoService.getAllProyectos();                    //traer todos los proyectos
+      }
+	  
+	  
+	  
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/{nombre}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
@@ -64,37 +77,43 @@ public class ProyectoController {
 							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
 					}
 	}
+
+
 	
-	
-	@RequestMapping(value="/addTarea/{id]}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code= HttpStatus.CREATED)
-	public @ResponseBody ProyectoResponseDto addTarea(@RequestBody TareaRequestDto request, @PathVariable("id") Long id){
+		public @ResponseBody ProyectoResponseDto addTarea(@RequestBody TareaRequestDto request, Long id_proyecto) {
 		
-			try {
-				ProyectoResponseDto dto =(ProyectoResponseDto) proyectoService.addTarea(request, id);		
-				return dto;
-				
-			} catch (EntityNotFoundException e) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la tarea", e);
-				
-			} catch (BadRequestException e) { 
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
-			}
+					try {
+							ProyectoResponseDto dto = (ProyectoResponseDto) proyectoService.addTarea(request, id_proyecto);
+							return dto;
+							
+					} catch (EntityNotFoundException e) {
+							throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el proyecto", e);
+							
+					} catch (BadRequestException e) {
+							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
+					}
 	}
 	
 	
-	@RequestMapping(value="/addUsuario/{id]}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code= HttpStatus.CREATED)
-	public @ResponseBody ProyectoResponseDto addUsuario(@RequestBody UsuarioRequestDto request, @PathVariable("id") Long id){
-			try {
-				ProyectoResponseDto dto =(ProyectoResponseDto) proyectoService.addUsuario(request, id);		
-				return dto;
-				
-			} catch (EntityNotFoundException e) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la tarea", e);
-			} catch (BadRequestException e) { 
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
-			}
+	
+	@RequestMapping(value = "/addUsuario/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Object> addUsuario(@PathVariable("id") ProyectoRequestDto request, @RequestBody Long id_proyecto) {
+		try {
+			ProyectoResponseDto dto = proyectoService.addUsuario(request, id_proyecto);
+			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+			
+		} catch (EntityNotFoundException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("404", "El usuario no se encontró");
+			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+			
+		} catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+			
+		}
+	
 	}
 	
 }

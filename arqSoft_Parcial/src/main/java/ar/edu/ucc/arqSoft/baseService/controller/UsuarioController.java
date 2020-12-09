@@ -88,4 +88,12 @@ public class UsuarioController {
 			}
 	    }
 	    
+	  
+	  @RequestMapping(method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+      public @ResponseBody List<UsuarioResponseDto> getAllUsuarios(){
+		  
+          return usuarioService.getAllUsuarios();                    //traer todos los usuarios
+      }
+	  
+	  
   }
