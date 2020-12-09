@@ -2,16 +2,18 @@ package ar.edu.ucc.arqSoft.baseService.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import ar.edu.ucc.arqSoft.baseService.dao.ProyectoDao;
 import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
 
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.UsuarioResponseDto;
+import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.baseService.model.Usuario;
 import ar.edu.ucc.arqSoft.common.dto.ModelDtoConverter;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
@@ -24,7 +26,8 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioDao usuarioDao;
-	
+	@Autowired
+	private ProyectoDao proyectoDao;
 	
 	public UsuarioResponseDto insertUsuario (UsuarioRequestDto request) throws BadRequestException  {
 		
@@ -74,4 +77,27 @@ public class UsuarioService {
 		
 		return response;
 	}
+
+	public List<UsuarioResponseDto> getUsuariosFromProyecto(Long id) throws EntityNotFoundException, BadRequestException {
+		
+		if (id <= 0)
+		{
+			throw new BadRequestException();
+		}
+		Proyecto proyecto = proyectoDao.load(id);
+		
+		Set<Usuario> usuarios = proyecto.getUsuarios();
+		
+		List<UsuarioResponseDto> response = new ArrayList<UsuarioResponseDto>();
+		 
+		for (Usuario usuario : usuarios) {
+			response.add((UsuarioResponseDto) new ModelDtoConverter().convertToDto(usuario, new UsuarioResponseDto()));
+		}
+		
+		return response;
+	}
+	
+
 }
+
+

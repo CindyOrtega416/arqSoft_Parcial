@@ -41,6 +41,7 @@ public ComentarioResponseDto getComentarioById (Long id) throws EntityNotFoundEx
 		Comentario comentario=comentarioDao.load(id);
 	
 		ComentarioResponseDto dto=new ComentarioResponseDto();
+		
 		dto.setDescripcion(comentario.getDescripcion());
 		dto.setFecha(comentario.getFecha());
 		dto.setNombre(comentario.getNombre());

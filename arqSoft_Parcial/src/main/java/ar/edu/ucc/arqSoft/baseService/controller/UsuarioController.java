@@ -1,6 +1,8 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -64,5 +66,26 @@ public class UsuarioController {
          
          
     }
+	
+	  @RequestMapping(value="usuariosFromProyecto/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+	    public @ResponseBody ResponseEntity<Object> usuariosFromProyecto(@PathVariable("id") Long id)
+	    {
+	        try {
+	        	List<UsuarioResponseDto> dto = usuarioService.getUsuariosFromProyecto(id);
+				return new ResponseEntity<Object>(dto, HttpStatus.OK);
+				
+			} catch (EntityNotFoundException e) {
+				GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró el usuario");
+				return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+				
+			} catch (BadRequestException e) {
+				GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
+				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+				
+			}catch (Exception e) {
+				GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+			}
 	    }
-
+	    
+  }
