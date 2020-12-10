@@ -1,20 +1,18 @@
 package ar.edu.ucc.arqSoft.baseService.test.dao;
 
-
-import javax.transaction.Transactional;
-
-
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
 import ar.edu.ucc.arqSoft.baseService.model.Usuario;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,9 +20,8 @@ import org.junit.Assert;
 @Transactional
 
 public class UsuarioDaoTest{
-	
-	private static Logger logger = Logger.getLogger(UsuarioDaoTest.class);
-	//private static final Logger logger = LogManager.getLogger(UsuarioDaoTest.class);
+
+	private static final Logger logger = LogManager.getLogger(UsuarioDaoTest.class);
 	
 	@Autowired
 	private UsuarioDao usuarioDao;
@@ -33,14 +30,12 @@ public class UsuarioDaoTest{
 	public void testRegister() throws BadRequestException {
 
 		logger.info("Test de Registro de user 1");
-		
 		Usuario socio = new Usuario();
-		socio.setNombre("Ignacio");
-		socio.setApellido("Achaval");
-		socio.setEmail("igna@gmail");
-
-		usuarioDao.insert(socio
-				);
+		socio.setNombre("Pedro");
+		socio.setApellido("lopez");
+		socio.setEmail("hola@");
+		
+		usuarioDao.insert(socio);
 		Assert.assertNotNull(socio.getId());
 		return;
 	}
