@@ -159,6 +159,8 @@
 	</dependencies>
 
 	<build>
+		
 		<finalName>baseService</finalName>
+	
 	</build>
 </project>
