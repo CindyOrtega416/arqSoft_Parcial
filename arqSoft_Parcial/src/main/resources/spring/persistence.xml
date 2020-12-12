@@ -26,10 +26,10 @@
             <property name="javax.persistence.jdbc.password" value="1719" />
             <!---  -->
             
-              <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
 	

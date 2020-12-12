@@ -20,10 +20,10 @@ import ar.edu.ucc.arqSoft.common.model.GenericObject;
 @Table(name = "PROYECTO")
 public class Proyecto extends GenericObject {
 	
-	@ManyToMany(mappedBy = "usuarios")
+	@ManyToMany(mappedBy = "proyecto", fetch = FetchType.LAZY)
 	private Set<Usuario> usuarios;
 	
-	@OneToMany (targetEntity=Usuario.class, mappedBy="TAREA", fetch = FetchType.LAZY)
+	@OneToMany (mappedBy="proyecto", fetch = FetchType.LAZY)
 	private Set<Tarea> tareas;
 	
 	@NotNull

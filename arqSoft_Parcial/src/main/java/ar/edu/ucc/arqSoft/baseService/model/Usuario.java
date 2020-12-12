@@ -35,13 +35,13 @@ public class Usuario extends GenericObject{
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL) //one to many
 	private Set<Tarea> tareas;
 	
-	@OneToMany (targetEntity=Usuario.class, mappedBy="USUARIO", fetch = FetchType.LAZY)
+	//@OneToMany (mappedBy="usuario", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private Set<Proyecto> proyectos;
 	
 

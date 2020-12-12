@@ -27,7 +27,7 @@ public class Estado extends GenericObject{
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 	
-	@OneToMany(targetEntity= Usuario.class,  mappedBy="Tarea", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="tarea", fetch = FetchType.LAZY)
 	private Set<Tarea> tareas;
 
 	public String getNombre() {

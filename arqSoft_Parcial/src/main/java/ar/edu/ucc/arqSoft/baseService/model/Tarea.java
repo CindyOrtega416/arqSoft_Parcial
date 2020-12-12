@@ -33,7 +33,7 @@ public class Tarea extends GenericObject {
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 
-	@ManyToMany(mappedBy = "Usuarios")
+	@ManyToMany(mappedBy = "Usuarios") //un usuario
 	private Set<Usuario> usuarios;
 	
 	//@ManyToOne(fetch = FetchType.LAZY)
@@ -59,7 +59,7 @@ public class Tarea extends GenericObject {
 	private Date ultima_actualizacion;
 	
 	
-	@OneToMany (targetEntity=Usuario.class, mappedBy="usuario", fetch = FetchType.LAZY)
+	@OneToMany (mappedBy="tarea", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
 	public String getNombre() {
