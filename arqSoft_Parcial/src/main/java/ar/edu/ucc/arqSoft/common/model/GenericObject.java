@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class GenericObject {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
@@ -21,5 +21,5 @@ public abstract class GenericObject {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 }

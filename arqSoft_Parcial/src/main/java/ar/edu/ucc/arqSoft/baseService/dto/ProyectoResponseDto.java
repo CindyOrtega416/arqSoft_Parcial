@@ -10,19 +10,18 @@ import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class ProyectoResponseDto implements DtoEntity {
 
-	
 	private String nombre;
-	
+
 	private String descripcion;
-	
+
 	private Date fecha_inicio;
-	
+
 	private Date fecha_actualizacion;
-	
+
 	private EstadoProyecto estado;
-	
+
 	private Set<Tarea> tarea;
-	
+
 	private Set<Usuario> usuario;
 
 	public String getNombre() {
@@ -40,7 +39,6 @@ public class ProyectoResponseDto implements DtoEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
 
 	public Date getFecha_inicio() {
 		return fecha_inicio;
@@ -81,8 +79,5 @@ public class ProyectoResponseDto implements DtoEntity {
 	public void setUsuario(Set<Usuario> usuario) {
 		this.usuario = usuario;
 	}
-	
-	
-	
 
 }

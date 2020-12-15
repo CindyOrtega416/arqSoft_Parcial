@@ -7,6 +7,5 @@ import ar.edu.ucc.arqSoft.common.dao.GenericDaoImp;
 
 @Repository
 public class EstadoImpDao extends GenericDaoImp<Estado, Long> implements EstadoDao {
-	
 
 }

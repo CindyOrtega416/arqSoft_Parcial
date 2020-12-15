@@ -1,5 +1,6 @@
 package ar.edu.ucc.arqSoft.baseService.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -18,62 +19,59 @@ import ar.edu.ucc.arqSoft.common.model.GenericObject;
 
 @Entity
 @Table(name = "USUARIO")
-public class Usuario extends GenericObject{
-	
+public class Usuario extends GenericObject {
+
 	@NotNull
 	@Size(min = 1, max = 250)
 	@Column(name = "NOMBRE")
 	private String nombre;
-	
+
 	@NotNull
 	@Size(min = 1, max = 250)
 	@Column(name = "APELLIDO")
 	private String apellido;
-	
+
 	@NotNull
 	@Size(min = 1, max = 250)
 	@Column(name = "EMAIL")
 	private String email;
-	
-	@ManyToMany(cascade = CascadeType.ALL) //one to many
-	private Set<Tarea> tareas;
-	
-	//@OneToMany (mappedBy="usuario", fetch = FetchType.LAZY)
+
+	@ManyToMany(cascade = CascadeType.ALL) // one to many
+	@JoinTable(name = "USUARIO_TAREA", joinColumns = @JoinColumn(name = "ID_USUARIO"), inverseJoinColumns = @JoinColumn(name = "ID_TAREA"))
+	Set<Tarea> tareas = new HashSet<>();
+
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
-	@ManyToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-	private Set<Proyecto> proyectos;
-	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "USUARIO_PROYECTO", joinColumns = { @JoinColumn(name = "ID_USUARIO") }, inverseJoinColumns = {
+			@JoinColumn(name = "I") })
+	Set<Proyecto> proyectos = new HashSet<>();
 
 	public Set<Tarea> getTareas() {
 		return tareas;
 	}
 
-
 	public void setTareas(Tarea tareas) {
 		this.tareas.add(tareas);
 	}
-
 
 	public Set<Comentario> getComentarios() {
 		return comentarios;
 	}
 
-
-	public void setComentarios(Set<Comentario> comentarios) {
-		this.comentarios = comentarios;
+	public void setComentarios(Comentario comentarios) {
+		this.comentarios.add(comentarios);
 	}
 
-
-	public Set<Proyecto> getProyectos(){
+	public Set<Proyecto> getProyectos() {
 		return proyectos;
-		
+
 	}
-	
-	public void setProyectos(Set<Proyecto> proyectos) {
-		this.proyectos = proyectos;
+
+	public void setProyectos(Proyecto proyectos) {
+		this.proyectos.add(proyectos);
 	}
-	
 
 	public String getNombre() {
 		return nombre;
@@ -98,9 +96,5 @@ public class Usuario extends GenericObject{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-		
-
 
 }

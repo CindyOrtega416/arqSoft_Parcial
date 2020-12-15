@@ -22,37 +22,34 @@ import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 @Controller
 @RequestMapping("/estado")
 public class EstadoController {
-	
+
 	@Autowired
 	private EstadoService estadoService;
-	
-	  @RequestMapping(method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	    public @ResponseBody List<EstadoResponseDto> getAllEstados()
-	    {
-	        return estadoService.getAllEstados();
-	    }
 
-	  
-	  
-	    @RequestMapping(value="/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	    public @ResponseBody ResponseEntity<Object> lookupEstadoById(@PathVariable("id") Long id) throws EntityNotFoundException
-	    {
-	        try {
-				EstadoResponseDto dto = estadoService.getEstadoById(id);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-			} catch (EntityNotFoundException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró el estado");
-				return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-				
-			} catch (BadRequestException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-				
-			}catch (Exception e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			}
-	    }
-	    
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<EstadoResponseDto> getAllEstados() {
+		return estadoService.getAllEstados();
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Object> lookupEstadoById(@PathVariable("id") Long id)
+			throws EntityNotFoundException {
+		try {
+			EstadoResponseDto dto = estadoService.getEstadoById(id);
+			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+
+		} catch (EntityNotFoundException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró el estado");
+			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+
+		} catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+
+		} catch (Exception e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }

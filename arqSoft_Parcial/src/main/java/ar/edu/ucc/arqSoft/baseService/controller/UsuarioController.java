@@ -1,6 +1,5 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,73 +26,64 @@ import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-
 	@Autowired
 	private UsuarioService usuarioService;
-	
-	
-	 
+
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code= HttpStatus.CREATED)
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public @ResponseBody UsuarioResponseDto register(@RequestBody UsuarioRequestDto request) {
-				try {
-						UsuarioResponseDto dto = (UsuarioResponseDto) usuarioService.insertUsuario(request);
-						return dto;
-		
-				} catch (BadRequestException e) {
-						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
-				}
-	}
-	
-	
-	 
-	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> lookupUsuarioById(@PathVariable("id") Long id){
-    
 		try {
-				UsuarioResponseDto dto = usuarioService.getUsuarioById(id);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-	}catch (EntityNotFoundException e) {
+			UsuarioResponseDto dto = (UsuarioResponseDto) usuarioService.insertUsuario(request);
+			return dto;
+
+		} catch (BadRequestException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID invalido", e);
+		}
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Object> lookupUsuarioById(@PathVariable("id") Long id) {
+
+		try {
+			UsuarioResponseDto dto = usuarioService.getUsuarioById(id);
+			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+
+		} catch (EntityNotFoundException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("1001", "No se encontró el usuario");
 			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-			
-		}	catch (BadRequestException e) {
+
+		} catch (BadRequestException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("1002", "ID inválido");
 			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-		
+
 		}
-         
-         
-    }
-	
-	  @RequestMapping(value="usuariosFromProyecto/{id}", method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-	    public @ResponseBody ResponseEntity<Object> usuariosFromProyecto(@PathVariable("id") Long id)
-	    {
-	        try {
-	        	List<UsuarioResponseDto> dto = usuarioService.getUsuariosFromProyecto(id);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-			} catch (EntityNotFoundException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró el usuario");
-				return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-				
-			} catch (BadRequestException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-				
-			}catch (Exception e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			}
-	    }
-	    
-	  
-	  @RequestMapping(method=RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
-      public @ResponseBody List<UsuarioResponseDto> getAllUsuarios(){
-		  
-          return usuarioService.getAllUsuarios();                    //traer todos los usuarios
-      }
-	  
-	  
-  }
+
+	}
+
+	@RequestMapping(value = "usuariosFromProyecto/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Object> usuariosFromProyecto(@PathVariable("id") Long id) {
+		try {
+			List<UsuarioResponseDto> dto = usuarioService.getUsuariosFromProyecto(id);
+			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+
+		} catch (EntityNotFoundException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró el usuario");
+			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+
+		} catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+
+		} catch (Exception e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<UsuarioResponseDto> getAllUsuarios() {
+
+		return usuarioService.getAllUsuarios(); // traer todos los usuarios
+	}
+
+}

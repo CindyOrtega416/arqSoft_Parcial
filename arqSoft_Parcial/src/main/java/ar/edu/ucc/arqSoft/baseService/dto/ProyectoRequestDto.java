@@ -6,23 +6,21 @@ import ar.edu.ucc.arqSoft.baseService.model.EstadoProyecto;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class ProyectoRequestDto implements DtoEntity {
-	
+
 	private Long id;
-	
+
 	private String nombre;
-	
+
 	private String descripcion;
-	
+
 	private Date fecha_inicio;
-	
+
 	private Date fecha_actualizacion;
-	
+
 	private EstadoProyecto estado;
-	
+
 	private Long id_usuario;
 
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -78,8 +76,5 @@ public class ProyectoRequestDto implements DtoEntity {
 	public void setId_usuario(Long id_usuario) {
 		this.id_usuario = id_usuario;
 	}
-	
-	
-	
 
 }

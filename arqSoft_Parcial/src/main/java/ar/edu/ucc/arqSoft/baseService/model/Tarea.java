@@ -1,12 +1,11 @@
 package ar.edu.ucc.arqSoft.baseService.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -18,48 +17,46 @@ import javax.validation.constraints.Size;
 
 import ar.edu.ucc.arqSoft.common.model.GenericObject;
 
-
 @Entity
 @Table(name = "TAREA")
 public class Tarea extends GenericObject {
-	
+
 	@NotNull
 	@Size(min = 1, max = 250)
 	@Column(name = "NOMBRE")
 	private String nombre;
-	
+
 	@NotNull
 	@Size(min = 1, max = 250)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
 
-	@ManyToMany(mappedBy = "Usuarios") //un usuario
-	private Set<Usuario> usuarios;
-	
-	//@ManyToOne(fetch = FetchType.LAZY)
-	//@JoinColumn(name="ID_USUARIO")
-	//private Usuario usuario;
-	
+	@ManyToMany(mappedBy = "tareas", fetch = FetchType.LAZY) // un usuario
+	private Set<Usuario> usuarios = new HashSet<>();
+
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name="ID_USUARIO")
+	// private Usuario usuario;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_PROYECTO")
-	private Proyecto proyecto;
-	
+	@JoinColumn(name = "ID_PROYECTO")
+	private Proyecto proyectos;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_ESTADO")
+	@JoinColumn(name = "ID_ESTADO")
 	private Estado estado;
-	
+
 	@NotNull
 	@Size(min = 1, max = 12)
 	@Column(name = "FECHA_INICIO")
 	private Date fecha_inicio;
-	
+
 	@NotNull
 	@Size(min = 1, max = 12)
 	@Column(name = "ULTIMA_ACTUALIZACION")
 	private Date ultima_actualizacion;
-	
-	
-	@OneToMany (mappedBy="tarea", fetch = FetchType.LAZY)
+
+	@OneToMany(mappedBy = "tarea", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
 	public String getNombre() {
@@ -78,13 +75,12 @@ public class Tarea extends GenericObject {
 		this.descripcion = descripcion;
 	}
 
-
 	public Proyecto getProyecto() {
-		return proyecto;
+		return proyectos;
 	}
 
 	public void setProyecto(Proyecto proyecto) {
-		this.proyecto = proyecto;
+		this.proyectos = proyecto;
 	}
 
 	public Estado getEstado() {
@@ -111,8 +107,6 @@ public class Tarea extends GenericObject {
 		this.ultima_actualizacion = ultima_actualizacion;
 	}
 
-
-
 	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
@@ -120,21 +114,13 @@ public class Tarea extends GenericObject {
 	public void setUsuarios(Usuario usuarios) {
 		this.usuarios.add(usuarios);
 	}
-	
-
 
 	public Set<Comentario> getComentarios() {
 		return comentarios;
 	}
 
-	
-	public void setComentarios(Set<Comentario> comentarios) {
-		this.comentarios = comentarios;
+	public void setComentarios(Comentario comentarios) {
+		this.comentarios.add(comentarios);
 	}
 
 }
-
-
-	
-	
-	

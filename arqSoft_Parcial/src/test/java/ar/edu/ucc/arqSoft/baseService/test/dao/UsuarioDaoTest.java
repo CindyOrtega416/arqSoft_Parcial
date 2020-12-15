@@ -19,13 +19,13 @@ import org.junit.Assert;
 @ContextConfiguration(locations = { "classpath:test-context.xml", "classpath:/spring/applicationContext.xml" })
 @Transactional
 
-public class UsuarioDaoTest{
+public class UsuarioDaoTest {
 
 	private static final Logger logger = LogManager.getLogger(UsuarioDaoTest.class);
-	
+
 	@Autowired
 	private UsuarioDao usuarioDao;
-	
+
 	@Test
 	public void testRegister() throws BadRequestException {
 
@@ -34,10 +34,9 @@ public class UsuarioDaoTest{
 		socio.setNombre("Pedro");
 		socio.setApellido("lopez");
 		socio.setEmail("hola@");
-		
+
 		usuarioDao.insert(socio);
 		Assert.assertNotNull(socio.getId());
 		return;
 	}
 }
-

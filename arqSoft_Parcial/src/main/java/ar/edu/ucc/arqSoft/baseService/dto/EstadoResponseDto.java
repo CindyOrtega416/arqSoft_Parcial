@@ -3,9 +3,9 @@ package ar.edu.ucc.arqSoft.baseService.dto;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class EstadoResponseDto implements DtoEntity {
-	
+
 	private String nombre;
-	
+
 	private String descripcion;
 
 	public String getNombre() {
@@ -23,8 +23,5 @@ public class EstadoResponseDto implements DtoEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	
-	
 
 }

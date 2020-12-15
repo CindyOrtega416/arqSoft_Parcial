@@ -1,21 +1,16 @@
 package ar.edu.ucc.arqSoft.baseService.dto;
 
-import java.util.Set;
-
-import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
-public class UsuarioResponseDto implements DtoEntity{
-	
+public class UsuarioResponseDto implements DtoEntity {
+
 	private Long id;
 
 	private String nombre;
-	
+
 	private String apellido;
-	
+
 	private String email;
-	
-	
 
 	public Long getId() {
 		return id;
@@ -49,8 +44,4 @@ public class UsuarioResponseDto implements DtoEntity{
 		this.email = email;
 	}
 
-
-	}
-
-
-	
+}

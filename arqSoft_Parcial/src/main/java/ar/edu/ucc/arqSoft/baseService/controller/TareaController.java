@@ -1,14 +1,10 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
-
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
-import ar.edu.ucc.arqSoft.baseService.dto.UsuarioResponseDto;
-import ar.edu.ucc.arqSoft.baseService.model.Proyecto;
 import ar.edu.ucc.arqSoft.baseService.service.TareaService;
 import ar.edu.ucc.arqSoft.common.exception.BadRequestException;
 import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
-import ar.edu.ucc.arqSoft.common.exception.InvalidTransitionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,98 +19,86 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import ar.edu.ucc.arqSoft.common.dto.GenericExceptionDto;
 
-
 @Controller
-	@RequestMapping("/tarea")
+@RequestMapping("/tarea")
 public class TareaController {
-	
-	
+
 	@Autowired
 	private TareaService tareaService;
-	
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Object> lookupTareaById(@PathVariable("id") Long id) {
 		try {
 			TareaResponseDto dto = tareaService.getTareaById(id);
 			return new ResponseEntity<Object>(dto, HttpStatus.OK);
-			
+
 		} catch (EntityNotFoundException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("404", "No se encontró la tarea buscada");
 			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-			
+
 		} catch (BadRequestException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("400", "El id ingresado no es válido");
 			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
 			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code= HttpStatus.CREATED)
-	
-		public @ResponseBody TareaResponseDto register(@RequestBody TareaRequestDto request) {
-					try {
-							TareaResponseDto dto = (TareaResponseDto) tareaService.insertTarea(request);
-							return dto;
-							
-					} catch (EntityNotFoundException e) {
-							throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
-							
-							
-					} catch (BadRequestException e) {
-							throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
-					
-					}
-					
+	@ResponseStatus(code = HttpStatus.CREATED)
+
+	public @ResponseBody TareaResponseDto register(@RequestBody TareaRequestDto request) {
+		try {
+			TareaResponseDto dto = (TareaResponseDto) tareaService.insertTarea(request);
+			return dto;
+
+		} catch (EntityNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarea no encontrada", e);
+
+		} catch (BadRequestException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID no válido", e);
+
+		}
+
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/cambiarEstadoDeTarea/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<Object> cambioEstado(@PathVariable("id") TareaRequestDto request, @RequestBody Long id) {
+	public @ResponseBody ResponseEntity<Object> cambioEstado(@PathVariable("id") TareaRequestDto request,
+			@RequestBody Long id) {
 		try {
 			TareaResponseDto dto = tareaService.cambioEstado(request, id);
 			return new ResponseEntity<Object>(dto, HttpStatus.OK);
-			
+
 		} catch (EntityNotFoundException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("404", "La tarea no se encontró");
 			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
-			
+
 		} catch (BadRequestException e) {
 			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
 			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			
+
 		}
-	
+
 	}
-	
-	
-	
-	 @RequestMapping(method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces= MediaType.APPLICATION_JSON_VALUE)
-	    @ResponseStatus(code = HttpStatus.CREATED)
-	    public @ResponseBody ResponseEntity<Object> addUsuario(@RequestBody TareaRequestDto request, Long id_usuario)
-	    {
-	        try {
-				TareaResponseDto dto = tareaService.addUsuario(request, id_usuario);
-				return new ResponseEntity<Object>(dto, HttpStatus.OK);
-				
-			} catch (BadRequestException e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			} catch (Exception e) {
-				GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-				return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-			}
-	    } 
-	 
-	 
-	
+
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public @ResponseBody ResponseEntity<Object> addUsuario(@RequestBody TareaRequestDto request, Long id_usuario) {
+		try {
+			TareaResponseDto dto = tareaService.addUsuario(request, id_usuario);
+			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+
+		} catch (BadRequestException e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
+			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }

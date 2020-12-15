@@ -17,19 +17,19 @@ import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 @ContextConfiguration(locations = { "classpath:test-context.xml", "classpath:/spring/applicationContext.xml" })
 
 public class UsuarioServiceTest {
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
-	
+
 	@Test
 	public void testInsert() throws EntityNotFoundException, BadRequestException {
 		UsuarioRequestDto request = new UsuarioRequestDto();
 		request.setNombre("Ignacio");
 		request.setApellido("Achaval");
 		request.setEmail("Igna@gmail");
-		
+
 		UsuarioResponseDto response = usuarioService.insertUsuario(request);
-		
+
 		Assert.assertNotNull(response.getNombre());
 		return;
 	}

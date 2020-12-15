@@ -13,16 +13,15 @@ import ar.edu.ucc.arqSoft.common.dao.GenericDaoImp;
 
 @Repository
 public class UsuarioImpDao extends GenericDaoImp<Usuario, Long> implements UsuarioDao {
-	
 
-	public List<Usuario> FindByName (String nombre){
+	public List<Usuario> FindByName(String nombre) {
 
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
-        Root<Usuario> entity = criteria.from(Usuario.class);
+		CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
+		Root<Usuario> entity = criteria.from(Usuario.class);
 
-        criteria.select(entity).where(builder.equal(entity.get("nombre"+" "+"Apellido"), nombre));
-        return em.createQuery(criteria).getResultList();
+		criteria.select(entity).where(builder.equal(entity.get("NOMBRE" + " " + "APELLIDO"), nombre));
+		return em.createQuery(criteria).getResultList();
 	}
 
 }

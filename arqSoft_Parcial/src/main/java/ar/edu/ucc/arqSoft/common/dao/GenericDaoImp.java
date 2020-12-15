@@ -20,8 +20,8 @@ import ar.edu.ucc.arqSoft.common.exception.EntityNotFoundException;
 public abstract class GenericDaoImp<E, ID extends Serializable> implements GenericDao<E, ID> {
 
 	@Autowired
-    protected EntityManager em;
-	
+	protected EntityManager em;
+
 	protected Class<? extends E> daoType;
 
 	@SuppressWarnings("unchecked")
@@ -33,11 +33,11 @@ public abstract class GenericDaoImp<E, ID extends Serializable> implements Gener
 
 	public void insert(E entity) throws BadRequestException {
 		try {
-				em.persist(entity);
+			em.persist(entity);
 		} catch (Exception e) {
-				throw new BadRequestException();
+			throw new BadRequestException();
 		}
-	
+
 	}
 
 	public void saveOrUpdate(E entity) {
@@ -51,24 +51,23 @@ public abstract class GenericDaoImp<E, ID extends Serializable> implements Gener
 	public void remove(E entity) {
 		em.remove(entity);
 	}
-	
-	public E load(ID key) throws EntityNotFoundException{
+
+	public E load(ID key) throws EntityNotFoundException {
 		E entity = em.find(daoType, key);
-		
+
 		if (entity == null) {
 			throw new EntityNotFoundException();
 		}
 		return entity;
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public List<E> getAll() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<E> criteria = (CriteriaQuery<E>) builder.createQuery(daoType);
-        
-        Root<E> member = (Root<E>) criteria.from(daoType);
-        criteria.select(member);
-        return em.createQuery(criteria).getResultList();
+		CriteriaQuery<E> criteria = (CriteriaQuery<E>) builder.createQuery(daoType);
+
+		Root<E> member = (Root<E>) criteria.from(daoType);
+		criteria.select(member);
+		return em.createQuery(criteria).getResultList();
 	}
 }

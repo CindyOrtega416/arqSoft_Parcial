@@ -13,29 +13,28 @@ import javax.validation.constraints.Size;
 
 import ar.edu.ucc.arqSoft.common.model.GenericObject;
 
-
 @Entity
-@Table(name="COMENTARIO")
+@Table(name = "COMENTARIO")
 public class Comentario extends GenericObject {
-	
+
 	@NotNull
 	@Size(min = 1, max = 500)
 	@Column(name = "NOMBRE")
 	private String nombre;
-	
+
 	@NotNull
 	@Size(min = 1, max = 500)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_COMENTARIO")
+	@JoinColumn(name = "ID_TAREA")
 	private Tarea tarea;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="ID_COMENTARIO")
+	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
-	
+
 	@NotNull
 	@Size(min = 1, max = 12)
 	@Column(name = "FECHA")
@@ -80,12 +79,5 @@ public class Comentario extends GenericObject {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
-
-	
-	
-	
-	
 
 }

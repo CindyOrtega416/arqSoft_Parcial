@@ -1,6 +1,5 @@
 package ar.edu.ucc.arqSoft.baseService.model;
 
-
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,20 +13,19 @@ import javax.validation.constraints.Size;
 import ar.edu.ucc.arqSoft.common.model.GenericObject;
 
 @Entity
-@Table(name="ESTADO")
-public class Estado extends GenericObject{
-	
+@Table(name = "ESTADO")
+public class Estado extends GenericObject {
+
 	@NotNull
 	@Size(min = 1, max = 250)
 	@Column(name = "NOMBRE")
 	private String nombre;
-	
-	
+
 	@Size(min = 1, max = 500)
 	@Column(name = "DESCRIPCION")
 	private String descripcion;
-	
-	@OneToMany(mappedBy="tarea", fetch = FetchType.LAZY)
+
+	@OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
 	private Set<Tarea> tareas;
 
 	public String getNombre() {
@@ -50,9 +48,8 @@ public class Estado extends GenericObject{
 		return tareas;
 	}
 
-	public void setTareas(Set<Tarea> tareas) {
-		this.tareas = tareas;
+	public void setTareas(Tarea tareas) {
+		this.tareas.add(tareas);
 	}
-	
-	
+
 }
