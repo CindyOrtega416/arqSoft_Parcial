@@ -8,17 +8,11 @@ import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 public class ProyectoRequestDto implements DtoEntity {
 
 	private Long id;
-
 	private String nombre;
-
 	private String descripcion;
-
 	private Date fecha_inicio;
-
 	private Date fecha_actualizacion;
-
 	private EstadoProyecto estado;
-
 	private Long id_usuario;
 
 	public Long getId() {

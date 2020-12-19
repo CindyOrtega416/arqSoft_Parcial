@@ -85,7 +85,7 @@ public class TareaController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/addUsuario/",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public @ResponseBody ResponseEntity<Object> addUsuario(@RequestBody TareaRequestDto request, Long id_usuario) {
 		try {

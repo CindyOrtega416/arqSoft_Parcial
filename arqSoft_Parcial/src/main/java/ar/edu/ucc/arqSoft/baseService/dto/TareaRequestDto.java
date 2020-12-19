@@ -5,15 +5,10 @@ import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 public class TareaRequestDto implements DtoEntity {
 
 	private Long id;
-
 	private String nombre;
-
 	private Long id_usuario;
-
 	private Long id_proyecto;
-
 	private Long id_estado;
-
 	private String descripcion;
 
 	public Long getId() {

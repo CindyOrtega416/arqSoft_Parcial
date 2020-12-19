@@ -5,13 +5,10 @@ import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 public class UsuarioRequestDto implements DtoEntity {
 
 	private Long id;
-
 	private String nombre;
-
 	private String apellido;
-
 	private String email;
-
+	
 	public Long getId() {
 		return id;
 	}

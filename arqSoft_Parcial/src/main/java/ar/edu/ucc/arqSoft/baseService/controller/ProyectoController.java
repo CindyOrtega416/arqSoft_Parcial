@@ -24,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/tarea")
+@RequestMapping("/proyecto")
 public class ProyectoController {
 
 	@Autowired
@@ -66,7 +66,7 @@ public class ProyectoController {
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/addTarea/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public @ResponseBody ProyectoResponseDto addTarea(@RequestBody TareaRequestDto request, Long id_proyecto) {
 
