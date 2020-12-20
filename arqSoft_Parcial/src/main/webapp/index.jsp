@@ -6,8 +6,7 @@
 
 <body>
 	<h2 style="background-color:powderblue;" style="margin-left:2.5em">FINAL ARQ DE SOFT II</h2>
-	<p> <br> Integrantes: </p>
-	<p>ORTEGA PALMA, Cindy </p>
-	<p>ACHAVAL PALACIO, Ignacio</p>
+	<p> <br> Integrantes: ORTEGA PALMA, Cindy </p>
+	<p>ACHAVAL, Ignacio</p>
 </body>
 </html>
