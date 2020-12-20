@@ -20,7 +20,7 @@ public class ProyectoImpDao extends GenericDaoImp<Proyecto, Long> implements Pro
 		CriteriaQuery<Proyecto> criteria = builder.createQuery(Proyecto.class);
 		Root<Proyecto> entity = criteria.from(Proyecto.class);
 
-		criteria.select(entity).where(builder.equal(entity.get("NOMBRE"), nombre));
+		criteria.select(entity).where(builder.equal(entity.get("nombre"), nombre));
 		return em.createQuery(criteria).getResultList();
 	}
 

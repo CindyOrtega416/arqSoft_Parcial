@@ -36,16 +36,17 @@ public class Usuario extends GenericObject {
 	@Column(name = "EMAIL")
 	private String email;
 
-	@ManyToMany(cascade = CascadeType.ALL) // one to many
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name = "USUARIO_TAREA", joinColumns = {@JoinColumn(name = "ID_USUARIO")}, inverseJoinColumns = {@JoinColumn(name = "ID_TAREA")})
 	Set<Tarea> tareas = new HashSet<>();
 
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private Set<Comentario> comentarios;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name = "USUARIO_PROYECTO", joinColumns =  {@JoinColumn(name = "ID_USUARIO")}, inverseJoinColumns = {@JoinColumn(name = "ID_PROYECTO")})
 	Set<Proyecto> proyectos = new HashSet<>();
+	
 
 	public Set<Tarea> getTareas() {
 		return tareas;

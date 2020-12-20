@@ -22,7 +22,8 @@ public class ProyectoResponseDto implements DtoEntity {
 
 	private Set<Tarea> tarea;
 
-	private Set<Usuario> usuario;
+	//private Set<Usuario> usuario;
+	private Long id_usuario;
 
 	public String getNombre() {
 		return nombre;
@@ -72,12 +73,20 @@ public class ProyectoResponseDto implements DtoEntity {
 		this.tarea = tarea;
 	}
 
-	public Set<Usuario> getUsuario() {
+	/*public Set<Usuario> getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(Set<Usuario> usuario) {
 		this.usuario = usuario;
+	}*/
+	
+	public Long getIdUsuario() {
+		return id_usuario;
+	}
+	
+	public void setIdUsuario(Long id_usuario) {
+		this.id_usuario = id_usuario;
 	}
 
 }

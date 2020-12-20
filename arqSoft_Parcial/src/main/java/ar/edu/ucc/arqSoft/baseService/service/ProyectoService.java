@@ -76,13 +76,28 @@ public class ProyectoService {
 
 	public ProyectoResponseDto insertProyecto(ProyectoRequestDto request)
 			throws BadRequestException, EntityNotFoundException {
+		
+		
+		Proyecto proyecto = (Proyecto) new ModelDtoConverter().convertToEntity(new Proyecto(), request);
+		
+		try {
+			proyectoDao.insert(proyecto);
+		}
+		catch (BadRequestException e) {
+				throw new BadRequestException();
+		}
+		
+		ProyectoResponseDto response = (ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new ProyectoResponseDto());
+		
+		return response;
 
-		Proyecto proyecto = new Proyecto();
+		/*Proyecto proyecto = new Proyecto();
 
 		proyecto.setNombre(request.getNombre());
 		proyecto.setDescripcion(request.getDescripcion());
 		proyecto.setFecha_inicio(request.getFecha_inicio());
 		proyecto.setFecha_actualizacion(request.getFecha_actualizacion());
+		proyecto.setUsuarios(usuarioDao.load(request.getId_usuario()));
 
 		proyectoDao.insert(proyecto);
 
@@ -93,7 +108,7 @@ public class ProyectoService {
 		response.setFecha_inicio(proyecto.getFecha_inicio());
 		response.setFecha_actualizacion(proyecto.getFecha_actualizacion());
 
-		return response;
+		return response;*/
 
 	}
 
@@ -127,14 +142,14 @@ public class ProyectoService {
 			throw new BadRequestException();
 		}
 
-		Proyecto proyecto = proyectoDao.load(id_proyecto);
+		Proyecto proyecto = proyectoDao.load(req.getId());
 
-		proyecto.setUsuarios(usuarioDao.load(req.getId()));
+		proyecto.setUsuarios(usuarioDao.load(req.getId_usuario()));
 
 		Comentario comentario = new Comentario();
 
 		comentario.setDescripcion("Nuevo usuario agregado");
-		comentario.setUsuario(usuarioDao.load(null));
+		comentario.setUsuario(usuarioDao.load(req.getId()));
 		comentario.setTarea(null);
 
 		comentarioDao.insert(comentario);
