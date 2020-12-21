@@ -34,7 +34,7 @@ public class ProyectoController {
 	@Autowired
 	private ProyectoService proyectoService;
 
-	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getAll/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<ProyectoResponseDto> getAllProyectos() {
 
 		return proyectoService.getAllProyectos(); // traer todos los proyectos
