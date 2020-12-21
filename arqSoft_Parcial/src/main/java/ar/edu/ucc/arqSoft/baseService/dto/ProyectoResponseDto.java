@@ -20,10 +20,10 @@ public class ProyectoResponseDto implements DtoEntity {
 
 	private EstadoProyecto estado;
 
-	private Set<Tarea> tarea;
+	//private Set<Tarea> tarea;
 
 	//private Set<Usuario> usuario;
-	private Long id_usuario;
+	//private Long id_usuario;
 
 	public String getNombre() {
 		return nombre;
@@ -65,14 +65,14 @@ public class ProyectoResponseDto implements DtoEntity {
 		this.estado = estado;
 	}
 
-	public Set<Tarea> getTarea() {
+/*	public Set<Tarea> getTarea() {
 		return tarea;
 	}
 
 	public void setTarea(Set<Tarea> tarea) {
 		this.tarea = tarea;
 	}
-
+*/
 	/*public Set<Usuario> getUsuario() {
 		return usuario;
 	}
@@ -81,12 +81,12 @@ public class ProyectoResponseDto implements DtoEntity {
 		this.usuario = usuario;
 	}*/
 	
-	public Long getIdUsuario() {
+/*	public Long getIdUsuario() {
 		return id_usuario;
 	}
 	
 	public void setIdUsuario(Long id_usuario) {
 		this.id_usuario = id_usuario;
 	}
-
+*/
 }

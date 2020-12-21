@@ -25,7 +25,7 @@ public class Proyecto extends GenericObject {
 	private Set<Usuario> usuarios = new HashSet<>();
 
 	@OneToMany(mappedBy = "proyectos", fetch = FetchType.LAZY)
-	private Set<Tarea> tareas;
+	private Set<Tarea> tareas= new HashSet<>();
 
 	@NotNull
 	@Size(min = 1, max = 250)

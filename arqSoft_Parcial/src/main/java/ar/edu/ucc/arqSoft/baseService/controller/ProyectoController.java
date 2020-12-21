@@ -1,5 +1,9 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
+import ar.edu.ucc.arqSoft.baseService.dto.AgregarTareaProyectoRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AgregarTareaProyectoResponseDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioProyectoRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioProyectoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
@@ -66,12 +70,11 @@ public class ProyectoController {
 		}
 	}
 
-	@RequestMapping(value = "/addTarea/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public @ResponseBody ProyectoResponseDto addTarea(@RequestBody TareaRequestDto request, Long id_proyecto) {
+	@RequestMapping(value = "/addTarea/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AgregarTareaProyectoResponseDto addTarea(@RequestBody AgregarTareaProyectoRequestDto request) {
 
 		try {
-			ProyectoResponseDto dto = (ProyectoResponseDto) proyectoService.addTarea(request, id_proyecto);
+			AgregarTareaProyectoResponseDto dto = (AgregarTareaProyectoResponseDto) proyectoService.addTarea(request);
 			return dto;
 
 		} catch (EntityNotFoundException e) {
@@ -82,23 +85,18 @@ public class ProyectoController {
 		}
 	}
 
-	@RequestMapping(value = "/addUsuario/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<Object> addUsuario(@PathVariable("id") ProyectoRequestDto request,
-			@RequestBody Long id_proyecto) {
+	@RequestMapping(value = "/addUsuario", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AsignarUsuarioProyectoResponseDto addUsuario(@RequestBody AsignarUsuarioProyectoRequestDto request) {
 		try {
-			ProyectoResponseDto dto = proyectoService.addUsuario(request, id_proyecto);
-			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+			AsignarUsuarioProyectoResponseDto dto = (AsignarUsuarioProyectoResponseDto) proyectoService.addUsuario(request);
+			return dto;
 
 		} catch (EntityNotFoundException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("404", "El usuario no se encontró");
-			return new ResponseEntity<Object>(exDto, HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el proyecto", e);
 
 		} catch (BadRequestException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
 		}
-
 	}
 
-}
+	}

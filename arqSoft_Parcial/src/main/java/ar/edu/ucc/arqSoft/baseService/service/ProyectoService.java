@@ -11,6 +11,10 @@ import ar.edu.ucc.arqSoft.baseService.dao.ComentarioDao;
 import ar.edu.ucc.arqSoft.baseService.dao.ProyectoDao;
 import ar.edu.ucc.arqSoft.baseService.dao.TareaDao;
 import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
+import ar.edu.ucc.arqSoft.baseService.dto.AgregarTareaProyectoRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AgregarTareaProyectoResponseDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioProyectoRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioProyectoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.ProyectoResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
@@ -91,7 +95,7 @@ public class ProyectoService {
 		
 		return response;
 
-		/*Proyecto proyecto = new Proyecto();
+	/*	Proyecto proyecto = new Proyecto();
 
 		proyecto.setNombre(request.getNombre());
 		proyecto.setDescripcion(request.getDescripcion());
@@ -108,55 +112,52 @@ public class ProyectoService {
 		response.setFecha_inicio(proyecto.getFecha_inicio());
 		response.setFecha_actualizacion(proyecto.getFecha_actualizacion());
 
-		return response;*/
-
+		return response;
+*/
 	}
 
-	public ProyectoResponseDto addTarea(TareaRequestDto req, Long id_proyecto)
+	public AgregarTareaProyectoResponseDto addTarea(AgregarTareaProyectoRequestDto req)
 			throws BadRequestException, EntityNotFoundException {
-		if (id_proyecto <= 0) {
-			throw new BadRequestException();
-		}
-		Proyecto proyecto = proyectoDao.load(id_proyecto);
+	
+		Proyecto proyecto = proyectoDao.load(req.getId_proyecto());
 
-		proyecto.setTareas(tareaDao.load(req.getId()));
+		proyecto.setTareas(tareaDao.load(req.getId_tarea()));
 
-		Comentario comentario = new Comentario();
+/*		Comentario comentario = new Comentario();
 
-		comentario.setDescripcion("Nueva tarea agregada al proyecto");
-		comentario.setUsuario(usuarioDao.load(null));
-		comentario.setTarea(tareaDao.load(req.getId()));
+		comentario.setDescripcion("Nuevo usuario agregado");
+		comentario.setUsuario(usuarioDao.load(req.getId_usuario()));
+		comentario.setTarea(null);
 
 		comentarioDao.insert(comentario);
+*/
+		AgregarTareaProyectoResponseDto response = new AgregarTareaProyectoResponseDto();
 
-		ProyectoResponseDto response = new ProyectoResponseDto();
-
-		response = (ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new ProyectoResponseDto());
+		response = (AgregarTareaProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new AgregarTareaProyectoResponseDto());
 
 		return response;
 	}
 
-	public ProyectoResponseDto addUsuario(ProyectoRequestDto req, Long id_proyecto)
-			throws BadRequestException, EntityNotFoundException {
-		if (id_proyecto <= 0) {
-			throw new BadRequestException();
-		}
 
-		Proyecto proyecto = proyectoDao.load(req.getId());
+
+	public AsignarUsuarioProyectoResponseDto addUsuario(AsignarUsuarioProyectoRequestDto req)
+			throws BadRequestException, EntityNotFoundException {
+	
+		Proyecto proyecto = proyectoDao.load(req.getId_proyecto());
 
 		proyecto.setUsuarios(usuarioDao.load(req.getId_usuario()));
 
-		Comentario comentario = new Comentario();
+/*		Comentario comentario = new Comentario();
 
 		comentario.setDescripcion("Nuevo usuario agregado");
-		comentario.setUsuario(usuarioDao.load(req.getId()));
+		comentario.setUsuario(usuarioDao.load(req.getId_usuario()));
 		comentario.setTarea(null);
 
 		comentarioDao.insert(comentario);
+*/
+		AsignarUsuarioProyectoResponseDto response = new AsignarUsuarioProyectoResponseDto();
 
-		ProyectoResponseDto response = new ProyectoResponseDto();
-
-		response = (ProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new ProyectoResponseDto());
+		response = (AsignarUsuarioProyectoResponseDto) new ModelDtoConverter().convertToDto(proyecto, new AsignarUsuarioProyectoResponseDto());
 
 		return response;
 	}

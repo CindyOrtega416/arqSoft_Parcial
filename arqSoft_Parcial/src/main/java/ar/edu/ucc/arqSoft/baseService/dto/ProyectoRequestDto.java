@@ -1,8 +1,10 @@
 package ar.edu.ucc.arqSoft.baseService.dto;
 
 import java.util.Date;
+import java.util.Set;
 
 import ar.edu.ucc.arqSoft.baseService.model.EstadoProyecto;
+import ar.edu.ucc.arqSoft.baseService.model.Tarea;
 import ar.edu.ucc.arqSoft.common.dto.DtoEntity;
 
 public class ProyectoRequestDto implements DtoEntity {
@@ -13,7 +15,8 @@ public class ProyectoRequestDto implements DtoEntity {
 	private Date fecha_inicio;
 	private Date fecha_actualizacion;
 	private EstadoProyecto estado;
-	private Long id_usuario;
+	//private Long id_usuario;
+
 
 	public Long getId() {
 		return id;
@@ -63,7 +66,7 @@ public class ProyectoRequestDto implements DtoEntity {
 		this.estado = estado;
 	}
 
-	public Long getId_usuario() {
+/*	public Long getId_usuario() {
 		return id_usuario;
 	}
 
@@ -71,4 +74,7 @@ public class ProyectoRequestDto implements DtoEntity {
 		this.id_usuario = id_usuario;
 	}
 
+*/
+
+	
 }

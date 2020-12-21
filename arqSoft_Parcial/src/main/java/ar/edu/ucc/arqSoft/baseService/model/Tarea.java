@@ -57,7 +57,7 @@ public class Tarea extends GenericObject {
 	private Date ultima_actualizacion;
 
 	@OneToMany(mappedBy = "tarea", fetch = FetchType.LAZY)
-	private Set<Comentario> comentarios;
+	private Set<Comentario> comentarios = new HashSet<>();
 
 	public String getNombre() {
 		return nombre;
