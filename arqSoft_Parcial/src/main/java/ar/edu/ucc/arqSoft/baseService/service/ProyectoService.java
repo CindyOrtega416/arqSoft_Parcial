@@ -146,6 +146,8 @@ public class ProyectoService {
 		Proyecto proyecto = proyectoDao.load(req.getId_proyecto());
 
 		proyecto.setUsuarios(usuarioDao.load(req.getId_usuario()));
+		
+		proyectoDao.update(proyecto);
 
 /*		Comentario comentario = new Comentario();
 

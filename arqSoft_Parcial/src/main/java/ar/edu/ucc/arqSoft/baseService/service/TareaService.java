@@ -12,6 +12,8 @@ import ar.edu.ucc.arqSoft.baseService.dao.UsuarioDao;
 import ar.edu.ucc.arqSoft.baseService.dao.ComentarioDao;
 import ar.edu.ucc.arqSoft.baseService.dao.EstadoDao;
 import ar.edu.ucc.arqSoft.baseService.dao.ProyectoDao;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioTareaRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioTareaResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
 import ar.edu.ucc.arqSoft.baseService.model.Comentario;
@@ -76,7 +78,6 @@ public class TareaService {
 		response.setDescripcion(tarea.getDescripcion());
 		response.setProyecto(tarea.getProyecto());
 		response.setEstado(tarea.getEstado());
-		response.setUsuario(tarea.getUsuarios());
 
 		return response;
 	}
@@ -103,6 +104,8 @@ public class TareaService {
 		tarea.setDescripcion(request.getDescripcion());
 		tarea.setProyecto(proyectoDao.load(request.getId_proyecto()));
 		tarea.setEstado(estadoDao.load(request.getId_estado()));
+		tarea.setFecha_inicio(request.getFecha_inicio());
+		tarea.setUltima_actualizacion(request.getUltima_actualizacion());
 
 		tareaDao.insert(tarea);
 
@@ -112,35 +115,36 @@ public class TareaService {
 		response.setDescripcion(tarea.getDescripcion());
 		response.setProyecto(tarea.getProyecto());
 		response.setEstado(tarea.getEstado());
+		response.setFecha_inicio(tarea.getFecha_inicio());
+		response.setUltima_actualizacion(tarea.getUltima_actualizacion());
 
 		return response;
 
 	}
 
-	public TareaResponseDto addUsuario(TareaRequestDto req, Long id_usuario)
+	public AsignarUsuarioTareaResponseDto addUsuario(AsignarUsuarioTareaRequestDto req)
 			throws BadRequestException, EntityNotFoundException {
 
-		Tarea tarea = tareaDao.load(req.getId());
+		Tarea tarea = tareaDao.load(req.getId_tarea());
 
-		if (id_usuario <= 0) {
-			throw new BadRequestException();
-		}
 
-		tarea.setUsuarios(usuarioDao.load(id_usuario));
+
+		tarea.setUsuarios(usuarioDao.load(req.getId_usuario()));
 
 		tareaDao.update(tarea);
 
-		Comentario comentario = new Comentario();
+/*		Comentario comentario = new Comentario();
 
 		comentario.setDescripcion("Nuevo usuario agregado");
 		comentario.setUsuario(usuarioDao.load(null));
 		comentario.setTarea(tareaDao.load(req.getId()));
 
 		comentarioDao.insert(comentario);
+*/
 
-		TareaResponseDto response = new TareaResponseDto();
+		AsignarUsuarioTareaResponseDto response = new AsignarUsuarioTareaResponseDto();
 
-		response = (TareaResponseDto) new ModelDtoConverter().convertToDto(tarea, new TareaResponseDto());
+		response = (AsignarUsuarioTareaResponseDto) new ModelDtoConverter().convertToDto(tarea, new AsignarUsuarioTareaResponseDto());
 
 		return response;
 	}

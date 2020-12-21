@@ -28,7 +28,7 @@
 				value="jdbc:mysql://localhost:3306/TEST" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password"
-				value="1719" />
+				value="root" />
 			<!--- -->
 
 			<property name="hibernate.show_sql" value="true" />

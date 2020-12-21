@@ -85,7 +85,7 @@ public class ProyectoController {
 		}
 	}
 
-	@RequestMapping(value = "/addUsuario", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/addUsuario/", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AsignarUsuarioProyectoResponseDto addUsuario(@RequestBody AsignarUsuarioProyectoRequestDto request) {
 		try {
 			AsignarUsuarioProyectoResponseDto dto = (AsignarUsuarioProyectoResponseDto) proyectoService.addUsuario(request);

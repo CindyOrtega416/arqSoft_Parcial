@@ -1,5 +1,9 @@
 package ar.edu.ucc.arqSoft.baseService.controller;
 
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioProyectoRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioProyectoResponseDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioTareaRequestDto;
+import ar.edu.ucc.arqSoft.baseService.dto.AsignarUsuarioTareaResponseDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaRequestDto;
 import ar.edu.ucc.arqSoft.baseService.dto.TareaResponseDto;
 import ar.edu.ucc.arqSoft.baseService.service.TareaService;
@@ -85,20 +89,19 @@ public class TareaController {
 
 	}
 
-	@RequestMapping(value = "/addUsuario/",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public @ResponseBody ResponseEntity<Object> addUsuario(@RequestBody TareaRequestDto request, Long id_usuario) {
+	@RequestMapping(value = "/addUsuario/",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AsignarUsuarioTareaResponseDto addUsuario(@RequestBody AsignarUsuarioTareaRequestDto request) {
 		try {
-			TareaResponseDto dto = tareaService.addUsuario(request, id_usuario);
-			return new ResponseEntity<Object>(dto, HttpStatus.OK);
+			AsignarUsuarioTareaResponseDto dto = (AsignarUsuarioTareaResponseDto) tareaService.addUsuario(request);
+			return dto;
+
+		} catch (EntityNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la tarea", e);
 
 		} catch (BadRequestException e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			GenericExceptionDto exDto = new GenericExceptionDto("400", "Error en la solicitud");
-			return new ResponseEntity<Object>(exDto, HttpStatus.BAD_REQUEST);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido", e);
 		}
+	
 	}
 
 }
